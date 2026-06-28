@@ -2,12 +2,9 @@
 
 {
   imports = [
-    inputs.home-manager.nixosModules.home-manager
-    ../modules/nixos/core.nix
-    ../modules/nixos/users.nix
-    ../modules/nixos/openssh.nix
-    ../modules/nixos/tailscale.nix
-    ../modules/nixos/docker.nix
+    ../modules/core.nix
+    ../modules/env.nix
+    ../modules/pkgs.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
@@ -19,9 +16,4 @@
   ];
 
   system.stateVersion = "26.05";
-
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.extraSpecialArgs = { inherit inputs; };
-  home-manager.users.mame = import ../home/mame/home.nix;
 }
