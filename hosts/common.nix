@@ -7,6 +7,7 @@
     ../modules/nixos/users.nix
     ../modules/nixos/openssh.nix
     ../modules/nixos/tailscale.nix
+    ../modules/nixos/docker.nix
   ];
 
   boot.loader.systemd-boot.enable = true;

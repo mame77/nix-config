@@ -3,6 +3,7 @@
 {
   imports = [
     ./default.nix
+    ../../modules/home-manager/dev.nix
     ../../modules/home-manager/nvim.nix
     ../../modules/home-manager/tmux.nix
   ];
