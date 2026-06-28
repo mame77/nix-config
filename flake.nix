@@ -13,6 +13,8 @@
         ./configuration.nix
         ./hardware-configuration.nix
         ./tmux.nix
+        ./bashrc.nix
+        ./nvim.nix
 
         ({ pkgs, ... }: {
           environment.systemPackages = with llm-agents.packages.${pkgs.system}; [

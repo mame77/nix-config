@@ -80,7 +80,11 @@
     tailscale
   ];
 
-  services.tailscale.enable = true;
+  services.tailscale = {
+      enable = true;
+      openFirewall = true;
+      authKeyFile = "/etc/tailscale/authkey";
+  };
   services.openssh = {
     enable = true;
     settings = {
