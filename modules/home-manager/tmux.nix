@@ -3,10 +3,10 @@
 {
   programs.tmux = {
     enable = true;
-    extraConfig = builtins.readFile ./tmux/tmux.conf;
+    extraConfig = builtins.readFile ../../dotfiles/tmux/tmux.conf;
   };
 
-  environment.systemPackages = with pkgs; [
+  home.packages = with pkgs; [
     lazygit
     lazydocker
     lazysql

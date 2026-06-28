@@ -1,10 +1,10 @@
 # PATH
-export PATH="$HOME/.bun/bin:$PATH"
-export PATH="$(go env GOPATH)/bin:$PATH"
-export PATH="$HOME/.opencode/bin:$PATH"
-export PATH="$HOME/.local/share/pnpm:$PATH"
-export CC="$(which gcc)"
-export CXX="$(which g++)"
+# export PATH="$HOME/.bun/bin:$PATH"
+# export PATH="$(go env GOPATH)/bin:$PATH"
+# export PATH="$HOME/.opencode/bin:$PATH"
+# export PATH="$HOME/.local/share/pnpm:$PATH"
+# export CC="$(which gcc)"
+# export CXX="$(which g++)"
 # env
 export EDITOR=nvim
 export TERM="xterm-256color"
