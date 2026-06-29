@@ -45,6 +45,12 @@ bind '"\C-p" menu-complete-backward'
 # bind '"\C-j" next-history'
 mkcd(){ mkdir -p -- "$1" && cd -- "$1"; }
 
+# fzf
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --inline-info"
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+export FZF_CTRL_T_COMMAND=""
+eval "$(fzf --bash)"
+
 projects-fzf() {
   local root selected config_dirs=()
   root="$(ghq root)"
@@ -57,7 +63,7 @@ projects-fzf() {
     {
       ghq list
       printf '%s\n' "${config_dirs[@]}"
-    } | fzf --height 40% --reverse
+    } | fzf
   )
 
   [[ -z "$selected" ]] && return
