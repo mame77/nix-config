@@ -30,6 +30,8 @@ in
     lazygit
     lazydocker
     lazysql
+    ghq
+    fzf
   ] ++ [
     llmAgents.opencode
     llmAgents.grok

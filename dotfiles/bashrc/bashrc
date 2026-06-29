@@ -24,6 +24,31 @@ bind '"\C-p" menu-complete-backward'
 # bind '"\C-k" previous-history'
 # bind '"\C-j" next-history'
 mkcd(){ mkdir -p -- "$1" && cd -- "$1"; }
+
+projects-fzf() {
+  local root selected config_dirs=()
+  root="$(ghq root)"
+
+  for dir in "$HOME/.config"/*/; do
+    [[ -d "${dir}.git" ]] && config_dirs+=("${dir#$HOME/}")
+  done
+
+  selected=$(
+    {
+      ghq list
+      printf '%s\n' "${config_dirs[@]}"
+    } | fzf --height 40% --reverse
+  )
+
+  [[ -z "$selected" ]] && return
+  if [[ -d "$root/$selected" ]]; then
+    cd "$root/$selected"
+  elif [[ -d "$HOME/$selected" ]]; then
+    cd "$HOME/$selected"
+  fi
+}
+bind -x '"\C-g": projects-fzf'
+
 # alias
 alias ...="../.."
 alias ls="ls --color=auto"
