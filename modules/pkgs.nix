@@ -32,6 +32,8 @@ in
     lazysql
     ghq
     fzf
+    niri
+    ghostty
   ] ++ [
     llmAgents.opencode
     llmAgents.grok
