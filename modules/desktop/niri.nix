@@ -22,6 +22,9 @@
     };
   };
 
+  # moved here from modules/fcitx5.nix — needed for fcitx5 to autostart under niri
+  services.xserver.desktopManager.runXdgAutostartIfNone = true;
+
   # audio: PipeWire + WirePlumber (PulseAudio compat + ALSA + 32bit ALSA)
   services.pipewire = {
     enable = true;
@@ -48,6 +51,4 @@
   systemd.user.services.wireplumber = {
     serviceConfig.Restart = "no";
   };
-
-  # niri config + scripts are now managed by home-manager (see modules/home.nix).
 }

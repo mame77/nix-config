@@ -12,7 +12,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, noctalia, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
     let
       mkHost = path: nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
@@ -20,13 +20,15 @@
           path
           home-manager.nixosModules.home-manager
           ({ ... }: {
-            nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "vivaldi" ];
+            nixpkgs.config.allowUnfreePredicate = pkg:
+              builtins.elem (nixpkgs.lib.getName pkg) [ "vivaldi" ];
+            # Propagate `inputs` to home-manager modules (noctalia, etc.).
+            home-manager.extraSpecialArgs = { inherit inputs; };
           })
         ];
       };
     in {
       nixosConfigurations.laptop = mkHost ./hosts/laptop;
       nixosConfigurations.server = mkHost ./hosts/server;
-      nixosConfigurations.nixos = mkHost ./hosts/server;
     };
 }

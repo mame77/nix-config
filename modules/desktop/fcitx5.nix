@@ -13,8 +13,6 @@
     };
   };
 
-  services.xserver.desktopManager.runXdgAutostartIfNone = true;
-
   home-manager.users.mame = { ... }: {
     # fcitx5: profile (mozc + keyboard-us)
     xdg.configFile."fcitx5/profile".text = ''

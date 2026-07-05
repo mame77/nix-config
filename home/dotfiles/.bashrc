@@ -18,7 +18,27 @@ git_branch() {
         echo " ($branch)"
     fi
 }
-PS1='-> \[\e[36m\]\w\[\e[0m\]$(git_branch) $ '
+prompt_path() {
+    local root line full best="" best_len=0
+    root="$(ghq root 2>/dev/null)"
+    if [[ -z "$root" || "$PWD" != "$root"/* ]]; then
+        printf '%s' "${PWD/#$HOME/\~}"
+        return
+    fi
+    while IFS= read -r line; do
+        full="$root/$line"
+        if [[ "$PWD" == "$full" || "$PWD" == "$full"/* ]] && (( ${#line} > best_len )); then
+            best="$line"
+            best_len=${#line}
+        fi
+    done < <(ghq list)
+    if [[ -n "$best" ]]; then
+        basename "$best"
+    else
+        printf '%s' "${PWD/#$HOME/\~}"
+    fi
+}
+PS1='-> \[\e[36m\]$(prompt_path)\[\e[0m\]$(git_branch) $ '
 # base
 shopt -s autocd
 bind '"\C-n" menu-complete'

@@ -3,10 +3,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../common.nix
-    ../../modules/niri.nix
-    ../../modules/noctalia.nix
-    ../../modules/fcitx5.nix
+    ../../profiles/base.nix
+    ../../profiles/laptop.nix
+    ../../profiles/dev.nix
   ];
 
   networking.hostName = "laptop";

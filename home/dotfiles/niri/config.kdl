@@ -50,6 +50,7 @@ window-rule {
     draw-border-with-background false
     geometry-corner-radius 12
     clip-to-geometry true
+    opacity 0.95
 }
 window-rule {
     match app-id=r#"^vivaldi-.*-Default$"#
