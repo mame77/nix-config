@@ -38,10 +38,10 @@ output "HDMI-A-1" {
 }
 layout {
     gaps 16
-    default-column-width { fixed 1504; }
+    default-column-width { proportion 1.0; }
     preset-column-widths {
-        fixed 1504
         proportion 0.5
+        proportion 1.0
     }
     focus-ring { width 1; active-color "#1e66f5"; }
 }
@@ -53,6 +53,10 @@ window-rule {
 }
 window-rule {
     match app-id=r#"^vivaldi-.*-Default$"#
+    open-maximized false
+    default-column-width { fixed 1504; }
+    default-window-height { fixed 884; }
+    default-floating-position x=0 y=0 relative-to="top-left"
     geometry-corner-radius 12
     clip-to-geometry true
     draw-border-with-background false
@@ -123,7 +127,7 @@ binds {
     Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
     // column size
-    Mod+O         { maximize-column; }
+    Mod+O         { switch-preset-column-width; }
     Mod+Shift+O   { fullscreen-window; }
     // bright
     F1 { spawn "sh" "-c" "/home/mame/.config/niri/scripts/brightness.sh 10%-"; }

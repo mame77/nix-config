@@ -1,4 +1,4 @@
-theme = "catppuccin-latte.conf"
+theme = "catppuccin-mocha.conf"
 # font
 font-family = "Iosevka"
 font-size = 17
@@ -12,7 +12,7 @@ cursor-color = #555555
 shell-integration-features = no-cursor
 # display
 window-theme = ghostty
-background-opacity = 1
+background-opacity = 0.9
 window-decoration = none
 window-padding-x = 6
 window-padding-y = 6

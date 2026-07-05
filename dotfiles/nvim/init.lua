@@ -113,4 +113,13 @@ if vim.fn.executable('deno') == 1 then
 end
 
 -- colorscheme
-vim.cmd('colorscheme catppuccin-latte');
+vim.cmd('colorscheme catppuccin-mocha')
+
+-- transparency
+vim.api.nvim_set_hl(0, 'Normal',     { bg = 'none' })
+vim.api.nvim_set_hl(0, 'NormalFloat', { bg = 'none' })
+vim.api.nvim_set_hl(0, 'SignColumn',  { bg = 'none' })
+vim.api.nvim_set_hl(0, 'FoldColumn',  { bg = 'none' })
+vim.api.nvim_set_hl(0, 'LineNr',      { bg = 'none' })
+vim.api.nvim_set_hl(0, 'CursorLineNr', { bg = 'none' })
+vim.opt.winblend = 10

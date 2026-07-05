@@ -8,10 +8,16 @@
   # user
   users.users.mame = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ];
+    extraGroups = [ "wheel" "docker" "bluetooth" ];
     initialPassword = "mame";
   };
 
+  # bluetooth
+  hardware.bluetooth.enable = true;
+
   # docker
   virtualisation.docker.enable = true;
+
+  # upower (required by noctalia battery widget)
+  services.upower.enable = true;
 }

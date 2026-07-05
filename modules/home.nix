@@ -27,6 +27,16 @@
       xdg.configFile.ghostty.source = ../dotfiles/ghostty;
       xdg.configFile.btop.source = ../dotfiles/btop;
 
+      # opencode: system theme for transparent terminal background
+      xdg.configFile."opencode/tui.json".text = ''
+        {
+          "$schema": "https://opencode.ai/tui.json",
+          "theme": "system"
+        }
+      '';
+
+      # fcitx5 settings are managed in modules/fcitx5.nix
+
       # default browser
       xdg.mimeApps.defaultApplications = {
         "x-scheme-handler/http" = "vivaldi-stable.desktop";

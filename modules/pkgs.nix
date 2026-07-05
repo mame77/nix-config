@@ -11,6 +11,7 @@ in
     # dev
     go
     git
+    gh
     vim
     neovim
     tmux
@@ -45,11 +46,9 @@ in
     wl-clipboard
     wf-recorder
     wl-mirror
+    gpu-screen-recorder
+    gpu-screen-recorder-gtk
     xdg-utils
-    # input method
-    fcitx5
-    fcitx5-gtk
-    libsForQt5.fcitx5-qt
     # terminal apps
     btop
     bluetuith
