@@ -37,20 +37,30 @@ output "HDMI-A-1" {
     position x=1536 y=0
 }
 layout {
-    focus-ring { width 3; active-color "#1e66f5"; }
+    gaps 16
+    default-column-width { fixed 1504; }
+    preset-column-widths {
+        fixed 1504
+        proportion 0.5
+    }
+    focus-ring { width 1; active-color "#1e66f5"; }
 }
 window-rule {
-    match app-id="TUI.float|net.lutris.Lutris|steam|LocalSend"
-    open-floating true
     open-maximized false
+    draw-border-with-background false
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+window-rule {
+    match app-id=r#"^vivaldi-.*-Default$"#
+    geometry-corner-radius 12
+    clip-to-geometry true
+    draw-border-with-background false
 }
 window-rule {
     match app-id="TUI.float"
+    open-floating true
     opacity 0.95
-}
-window-rule {
-    open-maximized true
-    draw-border-with-background false
 }
 animations {
      workspace-switch {
@@ -65,8 +75,6 @@ animations {
  }
 screenshot-path "~/Images/Screenshot from %m-%d %H-%M.png"
 prefer-no-csd
-spawn-at-startup "fcitx5"
-spawn-at-startup "pipewire"
 spawn-at-startup "sh" "-c" "/home/mame/.config/niri/scripts/battery-monitor.sh"
 environment {
     DISPLAY ":1"
@@ -76,9 +84,6 @@ environment {
     MOZ_ENABLE_WAYLAND "1"
     GTK_THEME "Adwaita"
     QT_STYLE_OVERRIDE "Adwaita"
-    INPUT_METHOD "fcitx"
-    QT_IM_MODULE "fcitx"
-    XMODIFIER    "@im=fcitx"
 }
 
 binds {
@@ -90,12 +95,12 @@ binds {
     Mod+W     { spawn "sh" "-c" "/home/mame/.config/niri/scripts/codex-desktop.sh"; }
     Mod+R     { spawn "wlogout"; }
     Mod+T     { spawn-sh "ghostty --class='app' --command='tmux'"; }
-    Mod+N     { spawn-sh "ghostty --class='app' --command='env TERM=xterm-256color ssh -tt nix'"; }
+    Mod+Shift+T     { spawn-sh "ghostty --class='app' --command='env TERM=xterm-256color ssh -tt server'"; }
     // web
-    Mod+G     { spawn-sh "vivaldi --new-window --app='https://grok.com/'"; }
-    Mod+S     { spawn-sh "vivaldi --new-window --app='https://app.slack.com/client/'"; }
-    Mod+D     { spawn-sh "vivaldi --new-window --app='https://discord.com/app'"; }
-    Mod+Y     { spawn-sh "vivaldi --new-window --app='https://www.youtube.com'"; }
+    Mod+G     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://grok.com/'"; }
+    Mod+S     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://app.slack.com/client/'"; }
+    Mod+D     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://discord.com/app'"; }
+    Mod+Y     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://www.youtube.com'"; }
     // system
     Mod+Q     { close-window; }
     Mod+1     { spawn-sh "ghostty --class='TUI.float' --command='bluetuith'"; }
@@ -118,17 +123,13 @@ binds {
     Mod+Shift+Ctrl+H     { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
     // column size
-    Mod+O { maximize-column; }
-    Mod+Shift+O { fullscreen-window; }
-    // sound
-    Mod+I { spawn "sh" "-c" "/home/mame/.config/niri/scripts/volume.sh 5%+"; }
-    Mod+U { spawn "sh" "-c" "/home/mame/.config/niri/scripts/volume.sh 5%-"; }
-    Mod+Shift+U { spawn "sh" "-c" "/home/mame/.config/niri/scripts/volume.sh muted"; }
+    Mod+O         { maximize-column; }
+    Mod+Shift+O   { fullscreen-window; }
     // bright
     F1 { spawn "sh" "-c" "/home/mame/.config/niri/scripts/brightness.sh 10%-"; }
     F2 { spawn "sh" "-c" "/home/mame/.config/niri/scripts/brightness.sh 10%+"; }
     // record
-    Mod+Z { spawn "sh" "-c" "bash /home/mame/.config/niri/scripts/screen-record.sh";}
+    Mod+Z { spawn "sh" "-c" "noctalia msg plugin noctalia/screen_recorder:service all toggle";}
     Mod+X { screenshot; }
     // off
     Mod+Shift+E   { quit; }
