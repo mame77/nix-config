@@ -19,24 +19,35 @@ git_branch() {
     fi
 }
 prompt_path() {
-    local root line full best="" best_len=0
-    root="$(ghq root 2>/dev/null)"
-    if [[ -z "$root" || "$PWD" != "$root"/* ]]; then
-        printf '%s' "${PWD/#$HOME/\~}"
+    local git_root rel
+    # 1) git リポジトリ内なら git root からの相対パスを表示
+    git_root="$(git rev-parse --show-toplevel 2>/dev/null)"
+    if [[ -n "$git_root" && ( "$PWD" == "$git_root" || "$PWD" == "$git_root"/* ) ]]; then
+        if [[ "$PWD" == "$git_root" ]]; then
+            basename "$git_root"
+        else
+            printf '%s/%s' "$(basename "$git_root")" "${PWD#"$git_root"/}"
+        fi
         return
     fi
-    while IFS= read -r line; do
-        full="$root/$line"
-        if [[ "$PWD" == "$full" || "$PWD" == "$full"/* ]] && (( ${#line} > best_len )); then
-            best="$line"
-            best_len=${#line}
+    # 2) ghq 配下 (git 管理なし) なら basename のみ
+    local ghq_root line full best="" best_len=0
+    ghq_root="$(ghq root 2>/dev/null)"
+    if [[ -n "$ghq_root" && "$PWD" == "$ghq_root"/* ]]; then
+        while IFS= read -r line; do
+            full="$ghq_root/$line"
+            if [[ "$PWD" == "$full" || "$PWD" == "$full"/* ]] && (( ${#line} > best_len )); then
+                best="$line"
+                best_len=${#line}
+            fi
+        done < <(ghq list)
+        if [[ -n "$best" ]]; then
+            basename "$best"
+            return
         fi
-    done < <(ghq list)
-    if [[ -n "$best" ]]; then
-        basename "$best"
-    else
-        printf '%s' "${PWD/#$HOME/\~}"
     fi
+    # 3) それ以外は ~ 置換のフルパス
+    printf '%s' "${PWD/#$HOME/\~}"
 }
 PS1='-> \[\e[36m\]$(prompt_path)\[\e[0m\]$(git_branch) $ '
 # base
@@ -46,6 +57,31 @@ bind '"\C-p" menu-complete-backward'
 # bind '"\C-k" previous-history'
 # bind '"\C-j" next-history'
 mkcd(){ mkdir -p -- "$1" && cd -- "$1"; }
+projects-fzf() {
+  local root selected config_dirs=()
+  root="$(ghq root)"
+
+  for dir in "$HOME/.config"/*/; do
+    [[ -d "${dir}.git" ]] && config_dirs+=("${dir#$HOME/}")
+  done
+
+  selected=$(
+    {
+      ghq list
+      printf '%s\n' "${config_dirs[@]}"
+    } | fzf --height 40% --reverse
+  )
+
+  [[ -z "$selected" ]] && return
+  if [[ -d "$root/$selected" ]]; then
+    cd "$root/$selected"
+  elif [[ -d "$HOME/$selected" ]]; then
+    cd "$HOME/$selected"
+  fi
+}
+bind -x '"\C-g": projects-fzf'
+# fzf shell integration (Ctrl+R 履歴検索 / Ctrl+T ファイル名 / Alt+C ディレクトリ移動)
+eval "$(fzf --bash)"
 # alias
 alias ...="../.."
 alias ls="ls --color=auto"
