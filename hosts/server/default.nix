@@ -3,8 +3,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../profiles/base.nix
-    ../../profiles/server.nix
+    ../../modules/system.nix
+    ../../modules/system-server.nix
+    ../../modules/dev.nix
   ];
 
   networking.hostName = "server";

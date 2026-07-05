@@ -3,9 +3,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../profiles/base.nix
-    ../../profiles/laptop.nix
-    ../../profiles/dev.nix
+    ../../modules/system.nix
+    ../../modules/system-laptop.nix
+    ../../modules/dev.nix
+    ../../modules/tool.nix
+    ../../home/default.nix
   ];
 
   networking.hostName = "laptop";

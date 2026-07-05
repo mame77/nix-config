@@ -1,15 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 let
-  # Strip the `doc` output from python to avoid collision with another
   # python in the closure (e.g. build-time tools).
   python = pkgs.python312.overrideAttrs (old: {
     passthru = pkgs.lib.filterAttrs (name: _: name != "doc") old.passthru;
   });
+  llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
   users.users.mame.packages = with pkgs; [
-    # dev — language toolchains
+    # language toolchains
     go
     python
     nodejs
@@ -17,35 +17,39 @@ in
     pnpm
     uv
 
-    # dev — build tooling
+    # build tooling
     gcc
     gnumake
     pkg-config
 
-    # dev — VCS
+    # git
     git
     gh
+    ghq
 
-    # dev — editors / multiplexers
+    # editors / multiplexers
     vim
     neovim
     tmux
 
-    # dev — search / nav
+    # search / nav
     ripgrep
     fd
     jq
     tree
     fzf
 
-    # dev — shell / direnv
+    # shell / direnv
     direnv
     nix-direnv
 
-    # dev — TUIs
+    # TUIs
     lazygit
     lazydocker
     lazysql
-    ghq
+
+    # llm agents
+    llmAgents.opencode
+    llmAgents.grok
   ];
 }

@@ -21,5 +21,15 @@
 
     # browser
     vivaldi
+
+    # terminal / system TUIs
+    btop
+    bluetuith
+    wiremix
+    impala
+
+    # utilities
+    brightnessctl
+    libnotify
   ];
 }
