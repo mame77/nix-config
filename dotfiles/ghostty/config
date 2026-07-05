@@ -1,0 +1,23 @@
+theme = "catppuccin-latte.conf"
+# font
+font-family = "Iosevka"
+font-size = 17
+font-feature = -dlig
+# shell
+command = nu
+# cursor
+cursor-style = block
+cursor-style-blink = false
+cursor-color = #555555
+shell-integration-features = no-cursor
+# display
+window-theme = ghostty
+background-opacity = 1
+window-decoration = none
+window-padding-x = 6
+window-padding-y = 6
+# other
+gtk-titlebar = true
+confirm-close-surface = false
+keybind = ctrl+enter=text:\r
+keybind = shift+enter=text:\r

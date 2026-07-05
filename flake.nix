@@ -6,15 +6,22 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     llm-agents.url = "github:numtide/llm-agents.nix";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, home-manager, noctalia, ... } @ inputs:
     let
       mkHost = path: nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; };
         modules = [
           path
           home-manager.nixosModules.home-manager
+          ({ ... }: {
+            nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "vivaldi" ];
+          })
         ];
       };
     in {

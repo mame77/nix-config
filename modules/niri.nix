@@ -29,21 +29,5 @@
     pulse.enable = true;
   };
 
-  # deliver niri config to /etc/niri/config.kdl
-  environment.etc."niri/config.kdl".source = ../dotfiles/niri/config.kdl;
-
-  # niri only reads $XDG_CONFIG_HOME/niri/config.kdl, so symlink it
-  # into the user's home. Only creates the symlink if nothing exists there yet,
-  # so a user-local override is preserved across rebuilds.
-  system.activationScripts.niriUserConfig = {
-    text = ''
-      mkdir -p /home/mame/.config/niri
-      if [ ! -e /home/mame/.config/niri/config.kdl ]; then
-        ln -s /etc/niri/config.kdl /home/mame/.config/niri/config.kdl
-        chown -h mame:users /home/mame/.config/niri/config.kdl
-      fi
-      chown mame:users /home/mame/.config/niri
-    '';
-    deps = [ "users" ];
-  };
+  # niri config + scripts are now managed by home-manager (see modules/home.nix).
 }

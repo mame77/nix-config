@@ -26,7 +26,7 @@
       ''
         eval "$(${pkgs.direnv}/bin/direnv hook bash)"
       ''
-      + builtins.readFile ../dotfiles/bashrc/bashrc;
+      + builtins.readFile ../dotfiles/.bashrc;
   };
 
   # home-manager 時代の ~/.bashrc が PS1 を \w で上書きするのを防ぐ
