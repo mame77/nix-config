@@ -24,6 +24,7 @@
 
     # terminal / system TUIs
     btop
+    fastfetch
     bluetuith
     wiremix
     impala
