@@ -20,6 +20,10 @@
     package = pkgs.niri;
   };
 
+  # ─── nix-ld: 動的リンクバイナリ (e.g. npm 版 supabase CLI) を通す ───
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [ stdenv.cc.cc glibc zlib ];
+
   # ─── greetd + tuigreet → niri-session ───────────────
   users.users.greeter = {
     isSystemUser = true;
