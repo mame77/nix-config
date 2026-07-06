@@ -93,7 +93,7 @@ environment {
 
 binds {
     // app
-    Mod+B     { spawn "obsidian"; }
+    Mod+B     { spawn-sh "/home/mame/.config/niri/scripts/obsidian-vault.sh"; }
     Mod+C     { spawn "vivaldi"; }
     Mod+F     { spawn "fuzzel"; }
     Mod+V     { spawn-sh "/home/mame/.local/opt/OpenCode/ai.opencode.desktop --no-sandbox"; }
@@ -136,6 +136,13 @@ binds {
     // record
     Mod+Z { spawn "sh" "-c" "noctalia msg plugin noctalia/screen_recorder:service all toggle";}
     Mod+X { screenshot; }
+    // handy (speech-to-text)
+    // Tauri グローバルショートカットは Niri 上で発火しないため、
+    // niri の binds から handy の CLI シグナルを送る。
+    // push-to-talk は使えず、トグル動作になる (toggle で十分なら OK)。
+    Ctrl+Slash        { spawn "handy" "--toggle-transcription"; }
+    Ctrl+Shift+Space  { spawn "handy" "--toggle-post-process"; }
+    Escape            { spawn "handy" "--cancel"; }
     // off
     Mod+Shift+E   { quit; }
 }

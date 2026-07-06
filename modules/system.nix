@@ -39,6 +39,7 @@
   environment.systemPackages = with pkgs; [
     curl
     tailscale
+    sshfs
   ];
 
   system.stateVersion = "26.05";

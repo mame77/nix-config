@@ -15,6 +15,7 @@
     wl-clipboard
     wf-recorder
     wl-mirror
+    wtype
     gpu-screen-recorder
     gpu-screen-recorder-gtk
     xdg-utils
@@ -32,5 +33,6 @@
     # utilities
     brightnessctl
     libnotify
+    obsidian
   ];
 }
