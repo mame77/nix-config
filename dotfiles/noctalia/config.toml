@@ -5,4 +5,3 @@ builtin = "Catppuccin"
 
 [wallpaper]
 enabled = true
-"default.path" = "/home/mame/Pictures/Wallpapers/default.png"

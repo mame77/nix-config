@@ -37,34 +37,34 @@
       xdg.configFile.btop.source    = ../dotfiles/btop;
 
       # ─── fcitx5 ────────────────────────────────────
-      xdg.configFile."fcitx5/profile".text = ''
-        [Groups/0]
-        Name=Default
-        Default Layout=us
-        DefaultIM=mozc
-
-        [Groups/0/Items/0]
-        Name=keyboard-us
-        Layout=
-
-        [Groups/0/Items/1]
-        Name=mozc
-        Layout=
-
-        [GroupOrder]
-        0=Default
-      '';
-      xdg.configFile."fcitx5/config".text = ''
-        [Hotkey]
-        TriggerKeys=
-        EnumeratedHotkeys."0"=
-        EnumeratedHotkeys."1"=
-      '';
-      xdg.configFile."fcitx5/conf/imselector.conf".text = ''
-        [Addon/imselector]
-        SwitchKey.0=Alt_L
-        SwitchKey.1=Alt_R
-      '';
+      # xdg.configFile."fcitx5/profile".text = ''
+      #   [Groups/0]
+      #   Name=Default
+      #   Default Layout=us
+      #   DefaultIM=mozc
+      #
+      #   [Groups/0/Items/0]
+      #   Name=keyboard-us
+      #   Layout=
+      #
+      #   [Groups/0/Items/1]
+      #   Name=mozc
+      #   Layout=
+      #
+      #   [GroupOrder]
+      #   0=Default
+      # '';
+      # xdg.configFile."fcitx5/config".text = ''
+      #   [Hotkey]
+      #   TriggerKeys=
+      #   EnumeratedHotkeys."0"=
+      #   EnumeratedHotkeys."1"=
+      # '';
+      # xdg.configFile."fcitx5/conf/imselector.conf".text = ''
+      #   [Addon/imselector]
+      #   SwitchKey.0=Alt_L
+      #   SwitchKey.1=Alt_R
+      # '';
 
       # ─── noctalia ──────────────────────────────────
       imports = [
