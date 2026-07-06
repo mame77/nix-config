@@ -30,20 +30,6 @@
           + builtins.readFile ../dotfiles/.bashrc;
       };
 
-      # ─── ssh client: server への永続 port forward ───
-      programs.ssh = {
-        enable = true;
-        matchBlocks."server" = {
-          hostname = "100.113.172.107";
-          user = "mame";
-          serverAliveInterval = 60;
-          localForwards = [
-            { from = "3000";  to = "127.0.0.1:3000";  }
-            { from = "54321"; to = "127.0.0.1:54321"; }
-          ];
-        };
-      };
-
       # ─── desktop: niri / ghostty / btop の XDG 設定 ─
       xdg.configFile."niri/config.kdl".source = ../dotfiles/niri/config.kdl;
       xdg.configFile."niri/scripts".source    = ../dotfiles/niri/scripts;
@@ -81,11 +67,18 @@
       '';
 
       # ─── noctalia ──────────────────────────────────
-      imports = [ inputs.noctalia.homeModules.default ];
+      imports = [
+        inputs.noctalia.homeModules.default
+        inputs.handy.homeManagerModules.default
+      ];
       programs.noctalia = {
         enable = true;
         systemd.enable = true;
       };
+
+      # ─── handy (speech-to-text) ────────────────────
+      services.handy.enable = true;
+
       home.file."Pictures/Wallpapers/default.png".source =
         ../dotfiles/wallpapers/default.png;
       xdg.configFile."noctalia/config.toml".source =

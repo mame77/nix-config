@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 
 {
   imports = [
@@ -8,7 +8,10 @@
     ../../modules/dev.nix
     ../../modules/tool.nix
     ../../home/default.nix
+    inputs.handy.nixosModules.default
   ];
 
   networking.hostName = "laptop";
+
+  programs.handy.enable = true;
 }

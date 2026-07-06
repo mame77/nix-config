@@ -14,7 +14,7 @@
   # ─── user ───────────────────────────────────────────
   users.users.mame = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" ];
+    extraGroups = [ "wheel" "docker" "input" ];
     initialPassword = "mame";
   };
 
