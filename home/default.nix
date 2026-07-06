@@ -30,6 +30,20 @@
           + builtins.readFile ../dotfiles/.bashrc;
       };
 
+      # ─── ssh client: server への永続 port forward ───
+      programs.ssh = {
+        enable = true;
+        matchBlocks."server" = {
+          hostname = "100.113.172.107";
+          user = "mame";
+          serverAliveInterval = 60;
+          localForwards = [
+            { from = "3000";  to = "127.0.0.1:3000";  }
+            { from = "54321"; to = "127.0.0.1:54321"; }
+          ];
+        };
+      };
+
       # ─── desktop: niri / ghostty / btop の XDG 設定 ─
       xdg.configFile."niri/config.kdl".source = ../dotfiles/niri/config.kdl;
       xdg.configFile."niri/scripts".source    = ../dotfiles/niri/scripts;
@@ -95,11 +109,4 @@
       };
     };
   };
-
-  # ─── 古い home-manager 管理の ~/.bashrc symlink を掃除 ──
-  system.activationScripts.removeStaleHomeManagerBashrc.text = ''
-    if [ -L /home/mame/.bashrc ] && readlink /home/mame/.bashrc | grep -q home-manager; then
-      rm /home/mame/.bashrc
-    fi
-  '';
 }

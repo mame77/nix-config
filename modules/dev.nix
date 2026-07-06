@@ -51,5 +51,8 @@ in
     # llm agents
     llmAgents.opencode
     llmAgents.grok
+
+    # cloud / db clis
+    supabase-cli
   ];
 }
