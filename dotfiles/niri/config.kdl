@@ -107,6 +107,7 @@ binds {
     Mod+R     { spawn "wlogout"; }
     Mod+T     { spawn-sh "ghostty --class='app' --command='tmux'"; }
     Mod+Shift+T     { spawn-sh "ghostty --class='app' --command='env TERM=xterm-256color ssh -tt server'"; }
+    Mod+Shift+W     { spawn "chromium"; }
     // web
     Mod+G     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://grok.com/'"; }
     Mod+S     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://app.slack.com/client/'"; }

@@ -7,7 +7,8 @@
     ../../modules/system-laptop.nix
     ../../modules/dev.nix
     ../../modules/tool.nix
-    ../../home/default.nix
+    ../../home/common.nix
+    ../../home/laptop.nix
     inputs.handy.nixosModules.default
   ];
 

@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 let
-  fcitx5Wrapper = config.i18n.inputMethod.fcitx5.package;
+  fcitx5Wrapper = config.i18n.inputMethod.package;
 in
 
 {
