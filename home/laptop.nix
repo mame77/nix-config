@@ -30,6 +30,9 @@
       XMODIFIERS = "@im=fcitx";
       INPUT_METHOD = "fcitx";
       SDL_IM_MODULE = "fcitx";
+      # xwayland-satellite が :0 で listen するので、Handy (Enigo) が
+      # X11 ソケットへ繋げるよう DISPLAY を明示。
+      DISPLAY = ":0";
     };
 
     xdg.configFile."fcitx5/profile".text = ''

@@ -91,6 +91,11 @@ alias xbps-remove="sudo xbps-remove"
 alias oc="opencode"
 alias sp="sudo ss -ltnup | grep LISTEN"
 alias sd="sudo sv restart docker"
+# nixos-rebuild shortcut: ホスト名から自動で flake config を選ぶ
+nrs() {
+  local flake_dir="/home/mame/ghq/github.com/mame77/nix-config"
+  (cd "$flake_dir" && sudo nixos-rebuild "$@" --flake ".#$(hostname -s)")
+}
 export PATH="$HOME/.gem/ruby/3.4.0/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export CAPACITOR_ANDROID_STUDIO_PATH="$HOME/.local/bin/studio.sh"

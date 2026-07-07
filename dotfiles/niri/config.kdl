@@ -45,6 +45,13 @@ layout {
     }
     focus-ring { width 1; active-color "#1e66f5"; }
 }
+
+// xwayland (Handy/Enigo が必要とする X11 サーバ。niri 26.04+ builtin)。
+// xwayland-satellite が PATH にあると niri が自動で socket 作成 + DISPLAY 設定。
+xwayland-satellite {
+    path "xwayland-satellite"
+}
+
 window-rule {
     open-maximized false
     draw-border-with-background false

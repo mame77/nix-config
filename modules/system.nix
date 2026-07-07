@@ -46,6 +46,7 @@
     sshfs
     fcitx5-mozc
     chromium-wrapped
+    xwayland-satellite
   ];
 
   system.stateVersion = "26.05";
