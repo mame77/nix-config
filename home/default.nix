@@ -36,35 +36,39 @@
       xdg.configFile.ghostty.source = ../dotfiles/ghostty;
       xdg.configFile.btop.source    = ../dotfiles/btop;
 
-      # ─── fcitx5 ────────────────────────────────────
-      # xdg.configFile."fcitx5/profile".text = ''
-      #   [Groups/0]
-      #   Name=Default
-      #   Default Layout=us
-      #   DefaultIM=mozc
-      #
-      #   [Groups/0/Items/0]
-      #   Name=keyboard-us
-      #   Layout=
-      #
-      #   [Groups/0/Items/1]
-      #   Name=mozc
-      #   Layout=
-      #
-      #   [GroupOrder]
-      #   0=Default
-      # '';
-      # xdg.configFile."fcitx5/config".text = ''
-      #   [Hotkey]
-      #   TriggerKeys=
-      #   EnumeratedHotkeys."0"=
-      #   EnumeratedHotkeys."1"=
-      # '';
-      # xdg.configFile."fcitx5/conf/imselector.conf".text = ''
-      #   [Addon/imselector]
-      #   SwitchKey.0=Alt_L
-      #   SwitchKey.1=Alt_R
-      # '';
+      # ─── fcitx5 (mozc) ─────────────────────────────
+      # niri の env {} ブロックは起動時にしか読まれないので、
+      # ログイン�シェル側にも入れてターミナルや子プロセスに伝播させる。
+      home.sessionVariables = {
+        GTK_IM_MODULE = "fcitx";
+        QT_IM_MODULE = "fcitx";
+        XMODIFIERS = "@im=fcitx";
+        INPUT_METHOD = "fcitx";
+        SDL_IM_MODULE = "fcitx";
+      };
+
+      xdg.configFile."fcitx5/profile".text = ''
+        [Groups/0]
+        Name=Default
+        Default Layout=us
+        DefaultIM=Mozc
+
+        [Groups/0/Items/0]
+        Name=keyboard-us
+        Layout=
+
+        [Groups/0/Items/1]
+        Name=Mozc
+        Layout=
+
+        [GroupOrder]
+        0=Default
+      '';
+      xdg.configFile."fcitx5/conf/imselector.conf".text = ''
+        [Addon/imselector]
+        SwitchKey.0=Alt_L
+        SwitchKey.1=Alt_R
+      '';
 
       # ─── noctalia ──────────────────────────────────
       imports = [
@@ -77,13 +81,13 @@
       };
 
       # ─── handy (speech-to-text) ────────────────────
-      services.handy.enable = true;
-
-      home.file."Pictures/Wallpapers/default.png".source =
-        ../dotfiles/wallpapers/default.png;
-      xdg.configFile."noctalia/config.toml".source =
-        config.lib.file.mkOutOfStoreSymlink ../dotfiles/noctalia/config.toml;
-
+      # services.handy.enable = true;
+      #
+      # home.file."Pictures/Wallpapers/default.png".source =
+      #   ../dotfiles/wallpapers/default.png;
+      # xdg.configFile."noctalia/config.toml".source =
+      #   config.lib.file.mkOutOfStoreSymlink ../dotfiles/noctalia/config.toml;
+      #
       # ─── mimeapps ─────────────────────────────────
       xdg.mimeApps.defaultApplications = {
         "x-scheme-handler/http" = "vivaldi-stable.desktop";

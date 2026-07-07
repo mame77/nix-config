@@ -81,6 +81,7 @@ animations {
 screenshot-path "~/Images/Screenshot from %m-%d %H-%M.png"
 prefer-no-csd
 spawn-at-startup "sh" "-c" "/home/mame/.config/niri/scripts/battery-monitor.sh"
+spawn-at-startup "fcitx5"
 environment {
     DISPLAY ":1"
     XDG_SESSION_TYPE "wayland"
@@ -89,6 +90,11 @@ environment {
     MOZ_ENABLE_WAYLAND "1"
     GTK_THEME "Adwaita"
     QT_STYLE_OVERRIDE "Adwaita"
+    GTK_IM_MODULE "fcitx"
+    QT_IM_MODULE "fcitx"
+    XMODIFIERS "@im=fcitx"
+    INPUT_METHOD "fcitx"
+    SDL_IM_MODULE "fcitx"
 }
 
 binds {

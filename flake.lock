@@ -33,7 +33,9 @@
           "handy",
           "nixpkgs"
         ],
-        "systems": "systems",
+        "systems": [
+          "systems"
+        ],
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
@@ -185,7 +187,9 @@
         "bun2nix": "bun2nix_2",
         "flake-parts": "flake-parts_2",
         "nixpkgs": "nixpkgs",
-        "systems": "systems_2",
+        "systems": [
+          "systems"
+        ],
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
@@ -275,38 +279,21 @@
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
         "nixpkgs": "nixpkgs_2",
-        "noctalia": "noctalia"
+        "noctalia": "noctalia",
+        "systems": "systems"
       }
     },
     "systems": {
+      "flake": false,
       "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
+        "path": "./systems.nix",
+        "type": "path"
       },
       "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_2": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
+        "path": "./systems.nix",
+        "type": "path"
       },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
+      "parent": []
     },
     "treefmt-nix": {
       "inputs": {

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   # ─── bootloader ─────────────────────────────────────
@@ -36,10 +36,16 @@
   };
 
   # ─── base system packages ───────────────────────────
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = let
+    chromium-wrapped = pkgs.writeShellScriptBin "chromium" ''
+      exec ${pkgs.chromium}/bin/chromium --user-data-dir="$HOME/.config/chromium-${config.networking.hostName}" "$@"
+    '';
+  in with pkgs; [
     curl
     tailscale
     sshfs
+    fcitx5-mozc
+    chromium-wrapped
   ];
 
   system.stateVersion = "26.05";
