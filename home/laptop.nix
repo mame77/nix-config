@@ -11,7 +11,13 @@
     xdg.configFile."opencode/tui.json".text = ''
       {
         "$schema": "https://opencode.ai/tui.json",
-        "theme": "system"
+        "theme": "system",
+        "attention": {
+          "enabled": true,
+          "notifications": true,
+          "sound": true,
+          "volume": 0.4
+        }
       }
     '';
 
