@@ -145,18 +145,15 @@ binds {
     Mod+O         { switch-preset-column-width; }
     Mod+Shift+O   { fullscreen-window; }
     // bright
-    F1 { spawn "sh" "-c" "/home/mame/.config/niri/scripts/brightness.sh 10%-"; }
-    F2 { spawn "sh" "-c" "/home/mame/.config/niri/scripts/brightness.sh 10%+"; }
+    // volume
+    Mod+I         { spawn "sh" "-c" "/home/mame/.config/niri/scripts/volume.sh up"; }
+    Mod+U         { spawn "sh" "-c" "/home/mame/.config/niri/scripts/volume.sh down"; }
+    Mod+Shift+U   { spawn "sh" "-c" "/home/mame/.config/niri/scripts/volume.sh mute"; }
     // record
     Mod+Z { spawn "sh" "-c" "noctalia msg plugin noctalia/screen_recorder:service all toggle";}
     Mod+X { screenshot; }
     // handy (speech-to-text)
-    // Tauri グローバルショートカットは Niri 上で発火しないため、
-    // niri の binds から handy の CLI シグナルを送る。
-    // push-to-talk は使えず、トグル動作になる (toggle で十分なら OK)。
     Ctrl+Slash        { spawn "handy" "--toggle-transcription"; }
-    Ctrl+Shift+Space  { spawn "handy" "--toggle-post-process"; }
-    Escape            { spawn "handy" "--cancel"; }
     // off
     Mod+Shift+E   { quit; }
 }

@@ -35,28 +35,21 @@
       DISPLAY = ":0";
     };
 
-    xdg.configFile."fcitx5/profile".text = ''
-      [Groups/0]
-      Name=Default
-      Default Layout=us
-      DefaultIM=Mozc
-
-      [Groups/0/Items/0]
-      Name=keyboard-us
-      Layout=
-
-      [Groups/0/Items/1]
-      Name=Mozc
-      Layout=
-
-      [GroupOrder]
-      0=Default
+    # GUI アプリ (vivaldi 含む) は niri spawn 経由で起動されるとは限らない
+    # (xdg-mime / noctalia / DBus 活性化など)。process は systemd --user
+    # の子になるので、~/.config/environment.d/ を経由して全プロセスに伝播させる。
+    # Vivaldi のラッパー (.vivaldi-wrapped) は IME env を含まないので必須。
+    home.file.".config/environment.d/99-fcitx.conf".text = ''
+      GTK_IM_MODULE=fcitx
+      QT_IM_MODULE=fcitx
+      XMODIFIERS=@im=fcitx
+      INPUT_METHOD=fcitx
+      SDL_IM_MODULE=fcitx
     '';
-    xdg.configFile."fcitx5/conf/imselector.conf".text = ''
-      [Addon/imselector]
-      SwitchKey.0=Alt_L
-      SwitchKey.1=Alt_R
-    '';
+
+    # fcitx5/profile と conf/imselector.conf は home-manager 管理外。
+    # 初回起動時に fcitx5 が ~/.config/fcitx5/ に作る素のファイルが
+    # source of truth になり、GUI での変更が永続化する (keyconfig.conf と同じ挙動)。
 
     # ─── noctalia ──────────────────────────────────
     programs.noctalia = {
