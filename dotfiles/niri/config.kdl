@@ -59,6 +59,11 @@ window-rule {
     clip-to-geometry true
     opacity 0.95
 }
+// chromium だけは背景透過しない
+window-rule {
+    match app-id="chromium-browser"
+    opacity 1.0
+}
 window-rule {
     match app-id=r#"^vivaldi-.*-Default$"#
     open-maximized false
@@ -106,7 +111,7 @@ environment {
 
 binds {
     // app
-    Mod+B     { spawn-sh "/home/mame/.config/niri/scripts/obsidian-vault.sh"; }
+    Mod+B     { spawn "obsidian"; }
     Mod+C     { spawn "vivaldi"; }
     Mod+F     { spawn "fuzzel"; }
     Mod+V     { spawn-sh "/home/mame/.local/opt/OpenCode/ai.opencode.desktop --no-sandbox"; }

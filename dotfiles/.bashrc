@@ -58,7 +58,7 @@ bind '"\C-p" menu-complete-backward'
 # bind '"\C-j" next-history'
 mkcd(){ mkdir -p -- "$1" && cd -- "$1"; }
 projects-fzf() {
-  local root selected config_dirs=()
+  local root selected path name config_dirs=()
   root="$(ghq root)"
 
   for dir in "$HOME/.config"/*/; do
@@ -73,10 +73,39 @@ projects-fzf() {
   )
 
   [[ -z "$selected" ]] && return
+
   if [[ -d "$root/$selected" ]]; then
-    cd "$root/$selected"
+    path="$root/$selected"
   elif [[ -d "$HOME/$selected" ]]; then
-    cd "$HOME/$selected"
+    path="$HOME/$selected"
+  else
+    return
+  fi
+
+  name="$(basename "$path")"
+
+  # すでにそのセッションにいるなら cd だけ（switch だと無反応に見える）
+  if [[ -n "${TMUX:-}" ]]; then
+    current="$(tmux display-message -p '#S' 2>/dev/null)"
+    if [[ "$current" == "$name" ]]; then
+      cd "$path" || return
+      return
+    fi
+  fi
+
+  if tmux has-session -t "=$name" 2>/dev/null; then
+    if [[ -n "${TMUX:-}" ]]; then
+      tmux switch-client -t "=$name"
+    else
+      tmux attach-session -t "=$name"
+    fi
+  else
+    if [[ -n "${TMUX:-}" ]]; then
+      tmux new-session -ds "$name" -c "$path"
+      tmux switch-client -t "=$name"
+    else
+      tmux new-session -s "$name" -c "$path"
+    fi
   fi
 }
 bind -x '"\C-g": projects-fzf'
