@@ -74,8 +74,7 @@ require("ibl").setup({ indent = { char = '│' }, scope = { enabled = false }, }
 require('oil').setup({ view_options = { show_hidden = true, }, win_options = { winbar = "%#@attribute.builtin#%{substitute(v:lua.require('oil').get_current_dir(), '^' . $HOME, '~', '')}", }, })
 
 -- treesitter
-require('nvim-treesitter').install({ 'lua', 'go', 'vue', 'html', 'scss', 'css', 'typescript', 'javascript',
-    'typescriptreact', 'javascriptreact' });
+require('nvim-treesitter').install({ 'lua', 'go', 'vue', 'html', 'scss', 'css', 'typescript', 'javascript', 'tsx' });
 vim.api.nvim_create_autocmd('FileType', {
     pattern = { 'lua', 'go', 'vue', 'html', 'scss', 'css', 'typescript', 'javascript', 'tsx', 'jsx' },
     callback = function() vim.treesitter.start() end,

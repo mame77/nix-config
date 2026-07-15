@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, lib, ... }:
 
 {
   home-manager.users.mame = { ... }: {
@@ -45,6 +45,8 @@
     # (xdg-mime / noctalia / DBus 活性化など)。process は systemd --user
     # の子になるので、~/.config/environment.d/ を経由して全プロセスに伝播させる。
     # Vivaldi のラッパー (.vivaldi-wrapped) は IME env を含まないので必須。
+    home.file.".tmux.conf".source = lib.mkForce ../dotfiles/tmux/tmux-laptop.conf;
+
     home.file.".config/environment.d/99-fcitx.conf".text = ''
       GTK_IM_MODULE=fcitx
       QT_IM_MODULE=fcitx

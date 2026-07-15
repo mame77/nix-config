@@ -44,6 +44,9 @@ in
     neovim
     tmux
 
+    # nvim-treesitter runtime compile
+    tree-sitter
+
     # search / nav
     ripgrep
     fd
