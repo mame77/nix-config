@@ -111,6 +111,17 @@ projects-fzf() {
 bind -x '"\C-g": projects-fzf'
 # fzf shell integration (Ctrl+R 履歴検索 / Ctrl+T ファイル名 / Alt+C ディレクトリ移動)
 eval "$(fzf --bash)"
+eval "$(devctl shell bash)"
+__devctl_cd_from_tmux_popup() {
+  [[ -n "${TMUX_PANE:-}" ]] || return
+  local tmp="/tmp/devctl-cwd-${TMUX_PANE#%}"
+  [[ -s "$tmp" ]] || return
+  local dir
+  dir="$(<"$tmp")"
+  rm -f -- "$tmp"
+  [[ -d "$dir" ]] && cd -- "$dir"
+}
+bind -x '"\C-x\C-d": __devctl_cd_from_tmux_popup'
 # alias
 alias ...="../.."
 alias ls="ls --color=auto"

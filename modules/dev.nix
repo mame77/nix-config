@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, ... }:
 
 let
   # python in the closure (e.g. build-time tools).
@@ -8,6 +8,18 @@ let
   llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
 in
 {
+  security.sudo.extraRules = [
+    {
+      users = [ "mame" ];
+      commands = [
+        {
+          command = "${config.system.build.nixos-rebuild}/bin/nixos-rebuild";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
   users.users.mame.packages = with pkgs; [
     # language toolchains
     go
@@ -55,5 +67,7 @@ in
 
     # cloud / db clis
     supabase-cli
+    wrangler
+    xdg-utils
   ];
 }
