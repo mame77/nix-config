@@ -14,7 +14,7 @@
   # ─── user ───────────────────────────────────────────
   users.users.mame = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "docker" "input" ];
+    extraGroups = [ "wheel" "docker" "input" "networkmanager" ];
     initialPassword = "mame";
   };
 
@@ -44,7 +44,6 @@
     curl
     tailscale
     sshfs
-    fcitx5-mozc
     chromium-wrapped
     xwayland-satellite
   ];

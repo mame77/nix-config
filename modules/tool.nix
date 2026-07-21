@@ -1,5 +1,9 @@
 { pkgs, ... }:
 
+let
+  opencode-desktop = pkgs.callPackage ../packages/opencode-desktop.nix {};
+in
+
 {
   users.users.mame.packages = with pkgs; [
     # compositor & shell
@@ -34,5 +38,6 @@
     brightnessctl
     libnotify
     obsidian
+    opencode-desktop
   ];
 }

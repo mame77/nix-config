@@ -2,6 +2,7 @@
 
 let
   fcitx5Wrapper = config.i18n.inputMethod.package;
+  fcitx5-karukan = pkgs.callPackage ../packages/fcitx5-karukan.nix { };
 in
 
 {
@@ -39,15 +40,15 @@ in
     enable = true;
     settings.default_session = {
       user = "greeter";
-      command = "env XDG_DATA_DIRS=${pkgs.fcitx5-mozc}/share:${fcitx5Wrapper}/share:/run/current-system/sw/share:/etc/profiles/per-user/mame/share:/nix/var/nix/profiles/default/share LD_LIBRARY_PATH=${pkgs.fcitx5-mozc}/lib:${fcitx5Wrapper}/lib GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=fcitx INPUT_METHOD=fcitx SDL_IM_MODULE=fcitx ${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
+      command = "env XDG_DATA_DIRS=${fcitx5Wrapper}/share:/run/current-system/sw/share:/etc/profiles/per-user/mame/share:/nix/var/nix/profiles/default/share LD_LIBRARY_PATH=${fcitx5Wrapper}/lib GTK_IM_MODULE=fcitx QT_IM_MODULE=fcitx XMODIFIERS=@im=fcitx INPUT_METHOD=fcitx SDL_IM_MODULE=fcitx ${pkgs.tuigreet}/bin/tuigreet --time --remember --cmd niri-session";
     };
   };
 
-  # ─── IME: fcitx5 + mozc (env vars / dbus / autostart 自動) ─
+  # ─── IME: fcitx5 + karukan (env vars / dbus / autostart 自動) ─
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
-    fcitx5.addons = [ pkgs.fcitx5-mozc ];
+    fcitx5.addons = [ fcitx5-karukan ];
   };
 
   # niri 配下で fcitx5 を autostart するため

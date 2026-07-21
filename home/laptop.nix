@@ -1,7 +1,12 @@
 { inputs, lib, ... }:
 
 {
-  home-manager.users.mame = { ... }: {
+  home-manager.users.mame = { pkgs, ... }:
+    let
+      karukan-dict = pkgs.callPackage ../packages/karukan-dict.nix { };
+      karukan-models = pkgs.callPackage ../packages/karukan-models.nix { };
+    in
+    {
     imports = [
       inputs.noctalia.homeModules.default
       inputs.handy.homeManagerModules.default
@@ -27,7 +32,7 @@
     xdg.configFile.ghostty.source = ../dotfiles/ghostty;
     xdg.configFile.btop.source    = ../dotfiles/btop;
 
-    # ─── fcitx5 (mozc) ─────────────────────────────
+    # ─── fcitx5 ────────────────────────────────────
     # niri の env {} ブロックは起動時にしか読まれないので、
     # ログインシェル側にも入れてターミナルや子プロセスに伝播させる。
     home.sessionVariables = {
@@ -55,9 +60,51 @@
       SDL_IM_MODULE=fcitx
     '';
 
-    # fcitx5/profile と conf/imselector.conf は home-manager 管理外。
-    # 初回起動時に fcitx5 が ~/.config/fcitx5/ に作る素のファイルが
-    # source of truth になり、GUI での変更が永続化する (keyconfig.conf と同じ挙動)。
+    # fcitx5 profile: keyboard-us + karukan を固定。
+    # GUI で変更しても next home-manager switch で上書きされる。
+    xdg.configFile."fcitx5/profile" = {
+      force = true;
+      text = ''
+        [Groups/0]
+        # Group Name
+        Name=Default
+        # Layout
+        Default Layout=us
+        # Default Input Method
+        DefaultIM=karukan
+
+        [Groups/0/Items/0]
+        # Name
+        Name=keyboard-us
+        # Layout
+        Layout=
+
+        [Groups/0/Items/1]
+        # Name
+        Name=karukan
+        # Layout
+        Layout=
+
+        [GroupOrder]
+        0=Default
+      '';
+    };
+
+    # ─── karukan (ニューラルかな漢字変換 IME) ──────────
+    # システム辞書は Nix store 上の karukan-dict を参照。
+    # 学習キャッシュ・ユーザー辞書は ~/.local/share/karukan-im/ に書き込まれる
+    # (mutable なので Nix 管理外)。
+    xdg.configFile."karukan-im/config.toml".text = ''
+      [conversion]
+      strategy = "adaptive"
+      dict_path = "${karukan-dict}/share/karukan-im/dict.bin"
+      model = "${karukan-models}/share/karukan-models/jinen-v1-small-Q5_K_M.gguf"
+      light_model = "${karukan-models}/share/karukan-models/jinen-v1-xsmall-Q5_K_M.gguf"
+
+      [learning]
+      enabled = true
+      max_entries = 10000
+    '';
 
     # ─── noctalia ──────────────────────────────────
     programs.noctalia = {
