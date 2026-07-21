@@ -136,5 +136,51 @@
       "image/png" = "vivaldi-stable.desktop";
       "x-scheme-handler/chrome" = "vivaldi-stable.desktop";
     };
+
+    # ─── chrome keyd bind: Ctrl+J/K → Ctrl+Tab/Shift+Tab ──
+    systemd.user.services.chrome-keyd-bind = {
+      Unit = {
+        Description = "Chrome-focused keyd remap for Ctrl+J/K → Ctrl+Tab";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+      };
+      Service = {
+        ExecStart = "${pkgs.writeShellScript "chrome-keyd-bind" ''
+          set -uo pipefail
+
+          ACTIVE=false
+
+          cleanup() {
+              ${pkgs.keyd}/bin/keyd bind reset 2>/dev/null || true
+          }
+          trap cleanup EXIT INT TERM HUP
+
+          while true; do
+              APP_ID=$(${pkgs.niri}/bin/niri msg -j focused-window 2>/dev/null | \
+                  ${pkgs.python3}/bin/python3 -c 'import json,sys; w=json.load(sys.stdin); print((w or {}).get("app_id",""))' 2>/dev/null || true)
+
+              if [[ "$APP_ID" == "google-chrome" ]]; then
+                  if [[ "$ACTIVE" != true ]]; then
+                      ACTIVE=true
+                      ${pkgs.keyd}/bin/keyd bind reset 'control.j=C-tab' 'control.k=C-S-tab' 2>/dev/null || true
+                  fi
+              else
+                  if [[ "$ACTIVE" != false ]]; then
+                      ACTIVE=false
+                      ${pkgs.keyd}/bin/keyd bind reset 2>/dev/null || true
+                  fi
+              fi
+
+              sleep 0.2
+          done
+        ''}";
+        Restart = "on-failure";
+        RestartSec = 2;
+        Type = "simple";
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+    };
   };
 }

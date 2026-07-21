@@ -59,9 +59,13 @@ window-rule {
     clip-to-geometry true
     opacity 0.95
 }
-// chromium だけは背景透過しない
+// chromium / google-chrome は背景透過しない
 window-rule {
     match app-id="chromium-browser"
+    opacity 1.0
+}
+window-rule {
+    match app-id="google-chrome"
     opacity 1.0
 }
 window-rule {
@@ -115,7 +119,7 @@ binds {
     Mod+C     { spawn "vivaldi"; }
     Mod+F     { spawn "fuzzel"; }
     Mod+V     { spawn-sh "/home/mame/.local/opt/OpenCode/ai.opencode.desktop --no-sandbox"; }
-    Mod+W     { spawn "sh" "-c" "/home/mame/.config/niri/scripts/codex-desktop.sh"; }
+    Mod+W     { spawn "google-chrome-stable"; }
     Mod+R     { spawn "wlogout"; }
     Mod+T     { spawn-sh "ghostty --class='app' --command='tmux'"; }
     Mod+Shift+T     { spawn-sh "ghostty --class='app' --command='env TERM=xterm-256color ssh -tt server'"; }

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   fcitx5Wrapper = config.i18n.inputMethod.package;
@@ -16,13 +16,45 @@ in
     options = "ctrl:nocaps";
   };
 
-  # ─── mame を bluetooth グループへ ──────────────────
-  users.users.mame.extraGroups = [ "bluetooth" ];
+  # ─── mame を bluetooth + keyd グループへ ──────────
+  users.users.mame.extraGroups = [ "bluetooth" "keyd" ];
+  users.groups.keyd = { };
 
   # ─── niri: scrollable-tiling Wayland compositor ────
   programs.niri = {
     enable = true;
     package = pkgs.niri;
+  };
+
+  # ─── keyd: 入力リマップデーモン ────────────────────
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
+      settings = {
+        main = {
+          capslock = "layer(control)";
+        };
+      };
+    };
+  };
+
+  # keyd は setgid(keyd) グループを切るため CAP_SETGID が必要。
+  # nixpkgs モジュールの hardening がこれを落としている既知バグあり。
+  # ref: https://github.com/NixOS/nixpkgs/issues/290161
+  systemd.services.keyd.serviceConfig = {
+    CapabilityBoundingSet = lib.mkForce [
+      "CAP_SYS_NICE"
+      "CAP_IPC_LOCK"
+      "CAP_SETGID"
+    ];
+    SystemCallFilter = lib.mkForce [
+      "@system-service"
+      "nice"
+      "setgid"
+      "setgroups"
+      "~@privileged"
+    ];
   };
 
   # ─── nix-ld: 動的リンクバイナリ (e.g. npm 版 supabase CLI) を通す ───

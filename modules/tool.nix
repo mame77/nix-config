@@ -26,6 +26,7 @@ in
 
     # browser
     vivaldi
+    google-chrome
 
     # terminal / system TUIs
     btop

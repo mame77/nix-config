@@ -38,7 +38,7 @@
           home-manager.nixosModules.home-manager
           ({ ... }: {
             nixpkgs.config.allowUnfreePredicate = pkg:
-              builtins.elem (nixpkgs.lib.getName pkg) [ "vivaldi" "obsidian" ];
+              builtins.elem (nixpkgs.lib.getName pkg) [ "vivaldi" "obsidian" "google-chrome" ];
             nixpkgs.config.allowDeprecatedx86_64Darwin = true;
             # Propagate `inputs` to home-manager modules (noctalia, etc.).
             home-manager.extraSpecialArgs = { inherit inputs; };
