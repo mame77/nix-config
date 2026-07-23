@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   # ─── lid switch を無視(サーバは蓋を開けない) ─────
@@ -17,4 +17,10 @@
   # ─── nix-ld: 動的リンクバイナリを通す ─────────────
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [ stdenv.cc.cc glibc zlib ];
+
+  # ─── TTY auto-login ────────────────────────────────
+  systemd.services."getty@tty1".serviceConfig.ExecStart = lib.mkForce [
+    ""
+    "${lib.getBin pkgs.util-linux}/bin/agetty --autologin mame --noclear %I $TERM"
+  ];
 }

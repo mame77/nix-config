@@ -11,6 +11,9 @@
   time.timeZone = "Asia/Tokyo";
   i18n.defaultLocale = "en_US.UTF-8";
 
+  # ─── autologin ──────────────────────────────────────
+  services.getty.autologinUser = "mame";
+
   # ─── user ───────────────────────────────────────────
   users.users.mame = {
     isNormalUser = true;
@@ -46,6 +49,7 @@
     sshfs
     chromium-wrapped
     xwayland-satellite
+    fastfetch
   ];
 
   system.stateVersion = "26.05";
