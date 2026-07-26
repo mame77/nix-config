@@ -12,6 +12,13 @@
       inputs.handy.homeManagerModules.default
     ];
 
+    # ─── system theme: dark ────────────────────────
+    dconf.settings = {
+      "org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+      };
+    };
+
     # ─── opencode TUI config (theme) ────────────────
     xdg.configFile."opencode/tui.json".text = ''
       {
@@ -30,6 +37,7 @@
     xdg.configFile."niri/config.kdl".source = ../dotfiles/niri/config.kdl;
     xdg.configFile."niri/scripts".source    = ../dotfiles/niri/scripts;
     xdg.configFile.ghostty.source = ../dotfiles/ghostty;
+    xdg.configFile.foot.source    = ../dotfiles/foot;
     xdg.configFile.btop.source    = ../dotfiles/btop;
 
     # ─── fcitx5 ────────────────────────────────────

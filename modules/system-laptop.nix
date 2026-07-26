@@ -86,6 +86,9 @@ in
   # niri 配下で fcitx5 を autostart するため
   services.xserver.desktopManager.runXdgAutostartIfNone = true;
 
+  # ─── fonts ─────────────────────────────────────────
+  fonts.packages = with pkgs; [ udev-gothic-nf ];
+
   # ─── audio: PipeWire + WirePlumber ─────────────────
   services.pipewire = {
     enable = true;
@@ -122,6 +125,9 @@ in
   }];
 
   # ─── Syncthing ─────────────────────────────────────
+  # DO NOT change dataDir without migrating cert/key/config.xml.
+  # Actual files live at dataDir/.config/syncthing/ (identity, DB, config).
+  # Changing dataDir regenerates device ID → breaks pairing with server.
   services.syncthing = {
     enable = true;
     user = "mame";

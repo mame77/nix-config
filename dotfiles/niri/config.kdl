@@ -94,7 +94,7 @@ environment {
     QT_QPA_PLATFORM "wayland"
     GDK_BACKEND "wayland"
     MOZ_ENABLE_WAYLAND "1"
-    GTK_THEME "Adwaita"
+    GTK_THEME "Adwaita:dark"
     QT_STYLE_OVERRIDE "Adwaita"
     GTK_IM_MODULE "fcitx"
     QT_IM_MODULE "fcitx"

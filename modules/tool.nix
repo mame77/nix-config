@@ -9,6 +9,7 @@ in
     # compositor & shell
     niri
     ghostty
+    foot
     tuigreet
 
     # wayland utilities

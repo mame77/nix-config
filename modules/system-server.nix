@@ -49,6 +49,9 @@
   '';
 
   # ─── Syncthing ─────────────────────────────────────
+  # DO NOT change dataDir without migrating cert/key/config.xml.
+  # Actual files live at dataDir/.config/syncthing/ (identity, DB, config).
+  # Changing dataDir regenerates device ID → breaks pairing with devices.
   services.syncthing = {
     enable = true;
     user = "mame";
