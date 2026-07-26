@@ -102,4 +102,31 @@ in
   systemd.user.services.wireplumber = {
     serviceConfig.Restart = "no";
   };
+
+  # ─── NFS client (mount server /data on demand) ─────
+  environment.systemPackages = with pkgs; [ nfs-utils ];
+
+  fileSystems."/home/mame/mnt/data" = {
+    device = "server-raw:/data";
+    fsType = "nfs";
+    options = [ "nfsvers=4" "soft" "timeo=10" "retrans=2" "noatime" "nofail" ];
+    noCheck = true;
+  };
+
+  systemd.automounts = [{
+    where = "/home/mame/mnt/data";
+    wantedBy = [ "network-online.target" ];
+    automountConfig = {
+      TimeoutIdleSec = "600";
+    };
+  }];
+
+  # ─── Syncthing ─────────────────────────────────────
+  services.syncthing = {
+    enable = true;
+    user = "mame";
+    dataDir = "/home/mame/.config/syncthing";
+    overrideDevices = false;
+    overrideFolders = false;
+  };
 }

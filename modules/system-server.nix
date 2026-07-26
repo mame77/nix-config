@@ -1,6 +1,8 @@
 { pkgs, lib, ... }:
 
 {
+  imports = [ ./immich.nix ];
+
   # ─── lid switch を無視(サーバは蓋を開けない) ─────
   services.logind.settings.Login = {
     HandleLidSwitch = "ignore";
@@ -23,4 +25,35 @@
     ""
     "${lib.getBin pkgs.util-linux}/bin/agetty --autologin mame --noclear %I $TERM"
   ];
+
+  # ─── /data directory structure ─────────────────────
+  systemd.services.data-setup = {
+    description = "Setup /data directory structure";
+    after = [ "data.mount" ];
+    requires = [ "data.mount" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig.Type = "oneshot";
+    script = ''
+      mkdir -p /data/{obsidian-vault,media,docs,backups,docker}
+      chown -R mame:users /data/obsidian-vault /data/media /data/docs /data/backups /data/docker
+      chmod 755 /data/{obsidian-vault,media,docs,docker}
+      chmod 700 /data/backups
+      ln -sfn /data/obsidian-vault /home/mame/obsidian-vault
+    '';
+  };
+
+  # ─── NFS server ────────────────────────────────────
+  services.nfs.server.enable = true;
+  services.nfs.server.exports = ''
+    /data 100.64.0.0/10(rw,sync,no_subtree_check,fsid=0,no_root_squash)
+  '';
+
+  # ─── Syncthing ─────────────────────────────────────
+  services.syncthing = {
+    enable = true;
+    user = "mame";
+    dataDir = "/home/mame/.config/syncthing";
+    overrideDevices = false;
+    overrideFolders = false;
+  };
 }

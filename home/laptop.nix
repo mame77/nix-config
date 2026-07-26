@@ -46,10 +46,10 @@
       DISPLAY = ":0";
     };
 
-    # GUI アプリ (vivaldi 含む) は niri spawn 経由で起動されるとは限らない
+    # GUI アプリ (chrome 含む) は niri spawn 経由で起動されるとは限らない
     # (xdg-mime / noctalia / DBus 活性化など)。process は systemd --user
     # の子になるので、~/.config/environment.d/ を経由して全プロセスに伝播させる。
-    # Vivaldi のラッパー (.vivaldi-wrapped) は IME env を含まないので必須。
+    # Chrome のラッパー は IME env を含まないので必須。
     home.file.".tmux.conf".source = lib.mkForce ../dotfiles/tmux/tmux-laptop.conf;
 
     home.file.".config/environment.d/99-fcitx.conf".text = ''
@@ -122,19 +122,19 @@
     #
     # ─── mimeapps ─────────────────────────────────
     xdg.mimeApps.defaultApplications = {
-      "x-scheme-handler/http" = "vivaldi-stable.desktop";
-      "x-scheme-handler/https" = "vivaldi-stable.desktop";
-      "x-scheme-handler/ftp" = "vivaldi-stable.desktop";
-      "text/html" = "vivaldi-stable.desktop";
-      "text/xml" = "vivaldi-stable.desktop";
-      "application/xhtml+xml" = "vivaldi-stable.desktop";
-      "application/xml" = "vivaldi-stable.desktop";
-      "application/rss+xml" = "vivaldi-stable.desktop";
-      "application/rdf+xml" = "vivaldi-stable.desktop";
-      "image/gif" = "vivaldi-stable.desktop";
-      "image/jpeg" = "vivaldi-stable.desktop";
-      "image/png" = "vivaldi-stable.desktop";
-      "x-scheme-handler/chrome" = "vivaldi-stable.desktop";
+      "x-scheme-handler/http" = "google-chrome.desktop";
+      "x-scheme-handler/https" = "google-chrome.desktop";
+      "x-scheme-handler/ftp" = "google-chrome.desktop";
+      "text/html" = "google-chrome.desktop";
+      "text/xml" = "google-chrome.desktop";
+      "application/xhtml+xml" = "google-chrome.desktop";
+      "application/xml" = "google-chrome.desktop";
+      "application/rss+xml" = "google-chrome.desktop";
+      "application/rdf+xml" = "google-chrome.desktop";
+      "image/gif" = "google-chrome.desktop";
+      "image/jpeg" = "google-chrome.desktop";
+      "image/png" = "google-chrome.desktop";
+      "x-scheme-handler/chrome" = "google-chrome.desktop";
     };
 
     # ─── chrome keyd bind: Ctrl+J/K → Ctrl+Tab/Shift+Tab ──

@@ -25,7 +25,6 @@ in
     xdg-utils
 
     # browser
-    vivaldi
     google-chrome
 
     # terminal / system TUIs

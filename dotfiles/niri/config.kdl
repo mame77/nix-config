@@ -69,16 +69,6 @@ window-rule {
     opacity 1.0
 }
 window-rule {
-    match app-id=r#"^vivaldi-.*-Default$"#
-    open-maximized false
-    default-column-width { fixed 1504; }
-    default-window-height { fixed 884; }
-    default-floating-position x=0 y=0 relative-to="top-left"
-    geometry-corner-radius 12
-    clip-to-geometry true
-    draw-border-with-background false
-}
-window-rule {
     match app-id="TUI.float"
     open-floating true
     opacity 0.95
@@ -116,7 +106,6 @@ environment {
 binds {
     // app
     Mod+B     { spawn "obsidian"; }
-    Mod+C     { spawn "vivaldi"; }
     Mod+F     { spawn "fuzzel"; }
     Mod+V     { spawn-sh "/home/mame/.local/opt/OpenCode/ai.opencode.desktop --no-sandbox"; }
     Mod+W     { spawn "google-chrome-stable"; }
@@ -125,10 +114,10 @@ binds {
     Mod+Shift+T     { spawn-sh "ghostty --class='app' --command='env TERM=xterm-256color ssh -tt server'"; }
     Mod+Shift+W     { spawn "chromium"; }
     // web
-    Mod+G     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://grok.com/'"; }
-    Mod+S     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://app.slack.com/client/'"; }
-    Mod+D     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://discord.com/app'"; }
-    Mod+Y     { spawn-sh "vivaldi --new-window --window-size=1504,884 --app='https://www.youtube.com'"; }
+    Mod+G     { spawn-sh "google-chrome-stable --new-window --window-size=1504,884 --app='https://grok.com/'"; }
+    Mod+S     { spawn-sh "google-chrome-stable --new-window --window-size=1504,884 --app='https://app.slack.com/client/'"; }
+    Mod+D     { spawn-sh "google-chrome-stable --new-window --window-size=1504,884 --app='https://discord.com/app'"; }
+    Mod+Y     { spawn-sh "google-chrome-stable --new-window --window-size=1504,884 --app='https://www.youtube.com'"; }
     // system
     Mod+Q     { close-window; }
     Mod+1     { spawn-sh "ghostty --class='TUI.float' --command='bluetuith'"; }

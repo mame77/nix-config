@@ -58,6 +58,9 @@ in
     direnv
     nix-direnv
 
+    # tool version manager
+    mise
+
     # TUIs
     lazygit
     lazydocker
