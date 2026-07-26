@@ -1,8 +1,10 @@
 # PATH
 export PATH="$HOME/.bun/bin:$PATH"
-export PATH="$(go env GOPATH)/bin:$PATH"
 export PATH="$HOME/.opencode/bin:$PATH"
 export PATH="$HOME/.local/share/pnpm:$PATH"
+export PATH="$HOME/.gem/ruby/3.4.0/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$(go env GOPATH)/bin:$PATH"
 export CC="$(which gcc)"
 export CXX="$(which g++)"
 # env
@@ -54,9 +56,6 @@ PS1='-> \[\e[36m\]$(prompt_path)\[\e[0m\]$(git_branch) $ '
 shopt -s autocd
 bind '"\C-n" menu-complete'
 bind '"\C-p" menu-complete-backward'
-# bind '"\C-k" previous-history'
-# bind '"\C-j" next-history'
-mkcd(){ mkdir -p -- "$1" && cd -- "$1"; }
 projects-fzf() {
   local root selected path name config_dirs=()
   root="$(ghq root)"
@@ -125,26 +124,5 @@ bind -x '"\C-x\C-d": __devctl_cd_from_tmux_popup'
 # alias
 alias ...="../.."
 alias ls="ls --color=auto"
-alias grep='grep --color=auto'
-alias xbps-install="sudo xbps-install"
-alias xbps-remove="sudo xbps-remove"
 alias oc="opencode"
-alias sp="sudo ss -ltnup | grep LISTEN"
-alias sd="sudo sv restart docker"
-# nixos-rebuild shortcut: ホスト名から自動で flake config を選ぶ
-nrs() {
-  local flake_dir="/home/mame/ghq/github.com/mame77/nix-config"
-  (cd "$flake_dir" && sudo nixos-rebuild "$@" --flake ".#$(hostname -s)")
-}
-export PATH="$HOME/.gem/ruby/3.4.0/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
-export CAPACITOR_ANDROID_STUDIO_PATH="$HOME/.local/bin/studio.sh"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# >>> grok installer >>>
-export PATH="$HOME/.grok/bin:$PATH"
-[[ -r "$HOME/.grok/completions/bash/grok.bash" ]] && source "$HOME/.grok/completions/bash/grok.bash"
-# <<< grok installer <<<

@@ -1,7 +1,7 @@
 theme = "catppuccin-mocha.conf"
 # font
 font-family = "Iosevka"
-font-size = 17
+font-size = 15
 font-feature = -dlig
 # shell
 command = nu
