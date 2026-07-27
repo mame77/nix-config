@@ -6,6 +6,7 @@ let
     passthru = pkgs.lib.filterAttrs (name: _: name != "doc") old.passthru;
   });
   llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+  herdr = pkgs.callPackage ../packages/herdr.nix {};
 in
 {
   security.sudo.extraRules = [
@@ -70,6 +71,9 @@ in
     llmAgents.opencode
     llmAgents.grok
     llmAgents.codex
+
+    # agent multiplexer
+    herdr
 
     # cloud / db clis
     supabase-cli

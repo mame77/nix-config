@@ -13,6 +13,7 @@
 
       # ─── dev: tmux / nvim / bash (fzf + ghq バインドは dotfiles/.bashrc 側) ─
       home.file.".tmux.conf".source = ../dotfiles/tmux/tmux.conf;
+      xdg.configFile."herdr/config.toml".source = ../dotfiles/herdr/config.toml;
       xdg.configFile."nvim/init.lua".source = ../dotfiles/nvim/init.lua;
       xdg.configFile."nvim/lua".source      = ../dotfiles/nvim/lua;
       xdg.configFile."nvim/lsp".source      = ../dotfiles/nvim/lsp;

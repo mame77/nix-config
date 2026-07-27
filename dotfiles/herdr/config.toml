@@ -1,0 +1,55 @@
+# ─── keyboard ─────────────────────────────────────
+[keys]
+prefix = "ctrl+space"
+split_vertical = "prefix+u"
+copy_mode = "prefix+enter"
+goto = ""
+settings = ""
+navigate_workspace_up = "k"
+navigate_workspace_down = "j"
+navigate_pane_up = "up"
+navigate_pane_down = "down"
+new_worktree = ""
+
+# ─── tmux muscle-memory popups ────────────────────
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "exec lazygit"
+description = "lazygit"
+width = "100%"
+height = "100%"
+
+[[keys.command]]
+key = "prefix+s"
+type = "popup"
+command = "exec lazysql"
+description = "lazysql"
+width = "100%"
+height = "100%"
+
+# ─── theme ────────────────────────────────────────
+[theme]
+name = "catppuccin"
+
+[theme.custom]
+accent = "#1e66f5"
+
+# ─── UI ───────────────────────────────────────────
+[ui]
+accent = "#1e66f5"
+hide_tab_bar_when_single_tab = true
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "compact"
+
+# ─── toast notifications ──────────────────────────
+[ui.toast]
+delivery = "herdr"
+delay_seconds = 1
+
+[ui.toast.herdr]
+position = "bottom-right"
+
+# ─── session ──────────────────────────────────────
+[session]
+resume_agents_on_restore = true

@@ -2,6 +2,7 @@
 
 let
   opencode-desktop = pkgs.callPackage ../packages/opencode-desktop.nix {};
+  orca-desktop = pkgs.callPackage ../packages/orca-desktop.nix {};
 in
 
 {
@@ -39,5 +40,6 @@ in
     libnotify
     obsidian
     opencode-desktop
+    orca-desktop
   ];
 }
