@@ -9,10 +9,13 @@
     ../../modules/tool.nix
     ../../home/common.nix
     ../../home/laptop.nix
-    inputs.handy.nixosModules.default
+    inputs.openwhispr.nixosModules.default
   ];
 
   networking.hostName = "laptop";
 
-  programs.handy.enable = true;
+  programs.openwhispr = {
+    enable = true;
+    users = [ "mame" ];
+  };
 }

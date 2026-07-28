@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
 
     makeWrapper $out/opt/OpenCode/ai.opencode.desktop $out/bin/opencode-desktop \
       --add-flags "--no-sandbox" \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libGL ]}
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libGL libnotify ]}
 
     mkdir -p $out/share/{icons,applications}
     cp -r extracted/usr/share/icons/hicolor $out/share/icons/ 2>/dev/null || true

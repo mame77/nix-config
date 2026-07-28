@@ -59,4 +59,13 @@
     overrideDevices = false;
     overrideFolders = false;
   };
+
+  # ─── Ollama (OpenWhispr 要約 / 整形用 LLM) ─────────
+  services.ollama = {
+    enable = true;
+    acceleration = null; # CPU only
+    host = "0.0.0.0";
+  };
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 11434 ];
 }

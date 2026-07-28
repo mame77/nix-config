@@ -46,7 +46,7 @@ layout {
     focus-ring { width 1; active-color "#1e66f5"; }
 }
 
-// xwayland (Handy/Enigo が必要とする X11 サーバ。niri 26.04+ builtin)。
+// xwayland (X11 アプリ用の互換レイヤー。niri 26.04+ builtin)。
 // xwayland-satellite が PATH にあると niri が自動で socket 作成 + DISPLAY 設定。
 xwayland-satellite {
     path "xwayland-satellite"
@@ -109,6 +109,7 @@ binds {
     Mod+F     { spawn "fuzzel"; }
     Mod+V     { spawn-sh "/home/mame/.local/opt/OpenCode/ai.opencode.desktop --no-sandbox"; }
     Mod+W     { spawn "google-chrome-stable"; }
+    Mod+E     { spawn "orca-desktop"; }
     Mod+R     { spawn "wlogout"; }
     Mod+T     { spawn-sh "ghostty --class='app' --command='tmux'"; }
     Mod+Shift+T     { spawn-sh "ghostty --class='app' --command='env TERM=xterm-256color ssh -tt server'"; }
@@ -150,8 +151,6 @@ binds {
     // record
     Mod+Z { spawn "sh" "-c" "noctalia msg plugin noctalia/screen_recorder:service all toggle";}
     Mod+X { screenshot; }
-    // handy (speech-to-text)
-    Ctrl+Slash        { spawn "handy" "--toggle-transcription"; }
     // off
     Mod+Shift+E   { quit; }
 }

@@ -9,7 +9,6 @@
     {
     imports = [
       inputs.noctalia.homeModules.default
-      inputs.handy.homeManagerModules.default
     ];
 
     # ─── system theme: dark ────────────────────────
@@ -33,12 +32,22 @@
       }
     '';
 
+    # ─── orca (AI orchestrator) ───────────────────
+    xdg.configFile."orca/orca-profile-index.json" = {
+      source = ../dotfiles/orca/orca-profile-index.json;
+      force = true;
+    };
+    xdg.configFile."orca/Preferences" = {
+      source = ../dotfiles/orca/Preferences;
+      force = true;
+    };
+
     # ─── desktop: niri / ghostty / btop の XDG 設定 ─
     xdg.configFile."niri/config.kdl".source = ../dotfiles/niri/config.kdl;
     xdg.configFile."niri/scripts".source    = ../dotfiles/niri/scripts;
     xdg.configFile.ghostty.source = ../dotfiles/ghostty;
     xdg.configFile.foot.source    = ../dotfiles/foot;
-    xdg.configFile.btop.source    = ../dotfiles/btop;
+    # xdg.configFile.btop.source    = ../dotfiles/btop;
 
     # ─── fcitx5 ────────────────────────────────────
     # niri の env {} ブロックは起動時にしか読まれないので、
@@ -49,9 +58,6 @@
       XMODIFIERS = "@im=fcitx";
       INPUT_METHOD = "fcitx";
       SDL_IM_MODULE = "fcitx";
-      # xwayland-satellite が :0 で listen するので、Handy (Enigo) が
-      # X11 ソケットへ繋げるよう DISPLAY を明示。
-      DISPLAY = ":0";
     };
 
     # GUI アプリ (chrome 含む) は niri spawn 経由で起動されるとは限らない
@@ -79,7 +85,7 @@
         # Layout
         Default Layout=us
         # Default Input Method
-        DefaultIM=karukan
+        DefaultIM=keyboard-us
 
         [Groups/0/Items/0]
         # Name
@@ -120,8 +126,6 @@
       systemd.enable = true;
     };
 
-    # ─── handy (speech-to-text) ────────────────────
-    # services.handy.enable = true;
     #
     # home.file."Pictures/Wallpapers/default.png".source =
     #   ../dotfiles/wallpapers/default.png;

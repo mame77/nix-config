@@ -22,10 +22,9 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    handy = {
-      url = "github:cjpais/Handy";
+    openwhispr = {
+      url = "github:OpenWhispr/openwhispr";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.bun2nix.inputs.systems.follows = "systems";
     };
   };
 

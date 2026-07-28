@@ -52,6 +52,23 @@ prompt_path() {
     printf '%s' "${PWD/#$HOME/\~}"
 }
 PS1='-> \[\e[36m\]$(prompt_path)\[\e[0m\]$(git_branch) $ '
+# Orca auto tmux
+__orca_tmux_done=0
+__orca_auto_tmux() {
+    [[ "$TERM_PROGRAM" == "Orca" ]] || return
+    [[ $__orca_tmux_done -eq 1 ]] && return
+    [[ -n "${ORCA_IN_TMUX:-}" ]] && { __orca_tmux_done=1; return; }
+    [[ -n "${TMUX:-}" ]] && { __orca_tmux_done=1; return; }
+
+    export ORCA_IN_TMUX=1
+    unset TMUX TMUX_PANE
+
+    local session="orca"
+    [[ -n "${ORCA_PANE_KEY:-}" ]] && session="orca-${ORCA_PANE_KEY//:/_}"
+
+    exec tmux new-session -A -s "$session" -c "$PWD"
+}
+export PROMPT_COMMAND="__orca_auto_tmux${PROMPT_COMMAND+;$PROMPT_COMMAND}"
 # base
 shopt -s autocd
 bind '"\C-n" menu-complete'

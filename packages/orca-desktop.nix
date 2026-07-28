@@ -37,7 +37,9 @@ stdenv.mkDerivation rec {
 
     makeWrapper $out/opt/Orca/orca-ide $out/bin/orca-desktop \
       --add-flags "--no-sandbox" \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libGL ]}
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libGL libnotify ]} \
+      --unset TMUX \
+      --unset TMUX_PANE
 
     mkdir -p $out/share/{icons,applications}
     cp -r extracted/usr/share/icons/hicolor $out/share/icons/ 2>/dev/null || true
