@@ -89,7 +89,7 @@ prefer-no-csd
 spawn-at-startup "sh" "-c" "/home/mame/.config/niri/scripts/battery-monitor.sh"
 spawn-at-startup "fcitx5"
 environment {
-    DISPLAY ":1"
+    DISPLAY ":0"
     XDG_SESSION_TYPE "wayland"
     QT_QPA_PLATFORM "wayland"
     GDK_BACKEND "wayland"
@@ -151,6 +151,8 @@ binds {
     // record
     Mod+Z { spawn "sh" "-c" "noctalia msg plugin noctalia/screen_recorder:service all toggle";}
     Mod+X { screenshot; }
+    // openwhispr dictation
+    Mod+C { spawn "sh" "-c" "ydotool key 125:1 42:1 193:1 && sleep 0.05 && ydotool key 125:0 42:0 193:0"; }
     // off
     Mod+Shift+E   { quit; }
 }

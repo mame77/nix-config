@@ -1,8 +1,10 @@
 { pkgs, inputs, config, ... }:
 
 let
-  # python in the closure (e.g. build-time tools).
-  python = pkgs.python312.overrideAttrs (old: {
+  pythonWithPkgs = (pkgs.python312.withPackages (ps: with ps; [
+    python-pptx
+    openpyxl
+  ])).overrideAttrs (old: {
     passthru = pkgs.lib.filterAttrs (name: _: name != "doc") old.passthru;
   });
   llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
@@ -24,7 +26,7 @@ in
   users.users.mame.packages = with pkgs; [
     # language toolchains
     go
-    python
+    pythonWithPkgs
     nodejs
     bun
     pnpm

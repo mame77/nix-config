@@ -22,6 +22,7 @@ in
     wf-recorder
     wl-mirror
     wtype
+    xdotool
     gpu-screen-recorder
     gpu-screen-recorder-gtk
     xdg-utils
