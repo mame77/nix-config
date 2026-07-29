@@ -29,6 +29,8 @@ in
 
     # browser
     google-chrome
+    bitwarden-desktop
+    bitwarden-cli
 
     # terminal / system TUIs
     btop

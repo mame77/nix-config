@@ -63,7 +63,7 @@
   # ─── Ollama (OpenWhispr 要約 / 整形用 LLM) ─────────
   services.ollama = {
     enable = true;
-    acceleration = null; # CPU only
+    package = pkgs.ollama-cpu;
     host = "0.0.0.0";
   };
 
