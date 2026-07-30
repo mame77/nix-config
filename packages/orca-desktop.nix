@@ -7,11 +7,11 @@
 
 stdenv.mkDerivation rec {
   pname = "orca-desktop";
-  version = "1.4.159";
+  version = "1.4.162";
 
   src = fetchurl {
     url = "https://github.com/stablyai/orca/releases/download/v${version}/orca-ide_${version}_amd64.deb";
-    hash = "sha256-jtuIP6HWoB7DwqEf3+yiXC7Uha8az9/VIMs9+iKUr2I=";
+    hash = "sha256-yR7YiSHKsiLDhUu/I7hhLBFeFRCsuPeFgExCca2o8T0=";
   };
 
   nativeBuildInputs = [ dpkg autoPatchelfHook makeWrapper ];

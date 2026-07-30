@@ -38,6 +38,7 @@
           ({ ... }: {
             nixpkgs.config.allowUnfreePredicate = pkg:
               builtins.elem (nixpkgs.lib.getName pkg) [ "obsidian" "google-chrome" "bws" ];
+            nixpkgs.config.permittedInsecurePackages = [ "electron-39.8.10" ];
             nixpkgs.config.allowDeprecatedx86_64Darwin = true;
             # Propagate `inputs` to home-manager modules (noctalia, etc.).
             home-manager.extraSpecialArgs = { inherit inputs; };

@@ -68,6 +68,8 @@ __orca_auto_tmux() {
 
     exec tmux new-session -A -s "$session" -c "$PWD"
 }
+__orca_osc133_precmd() { :; }
+__orca_osc133_epilogue() { :; }
 PROMPT_COMMAND="__orca_auto_tmux${PROMPT_COMMAND+;$PROMPT_COMMAND}"
 # PROMPT_COMMAND contains shell-local functions and must not leak into tmux
 # child shells, where Orca's function definitions are unavailable.
