@@ -68,7 +68,10 @@ __orca_auto_tmux() {
 
     exec tmux new-session -A -s "$session" -c "$PWD"
 }
-export PROMPT_COMMAND="__orca_auto_tmux${PROMPT_COMMAND+;$PROMPT_COMMAND}"
+PROMPT_COMMAND="__orca_auto_tmux${PROMPT_COMMAND+;$PROMPT_COMMAND}"
+# PROMPT_COMMAND contains shell-local functions and must not leak into tmux
+# child shells, where Orca's function definitions are unavailable.
+export -n PROMPT_COMMAND
 # base
 shopt -s autocd
 bind '"\C-n" menu-complete'
@@ -142,4 +145,3 @@ bind -x '"\C-x\C-d": __devctl_cd_from_tmux_popup'
 alias ...="../.."
 alias ls="ls --color=auto"
 alias oc="opencode"
-

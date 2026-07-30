@@ -20,6 +20,9 @@
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [ stdenv.cc.cc glibc zlib ];
 
+  # ─── Bitwarden CLI ──────────────────────────────────
+  environment.systemPackages = [ pkgs.bitwarden-cli ];
+
   # ─── TTY auto-login ────────────────────────────────
   systemd.services."getty@tty1".serviceConfig.ExecStart = lib.mkForce [
     ""
