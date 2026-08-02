@@ -32,11 +32,8 @@
       }
     '';
 
-    # ─── orca (AI orchestrator) ───────────────────
-    xdg.configFile."orca/orca-profile-index.json" = {
-      source = ../dotfiles/orca/orca-profile-index.json;
-      force = true;
-    };
+    # Orca owns its profile and remote-environment state. Do not replace it
+    # during Home Manager activation, or UI-added hosts/projects disappear.
     xdg.configFile."orca/Preferences" = {
       source = ../dotfiles/orca/Preferences;
       force = true;

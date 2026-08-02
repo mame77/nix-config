@@ -41,6 +41,9 @@ stdenv.mkDerivation rec {
       --unset TMUX \
       --unset TMUX_PANE
 
+    # Expose Orca's command-line client separately from the desktop launcher.
+    makeWrapper $out/opt/Orca/resources/bin/orca-ide $out/bin/orca
+
     mkdir -p $out/share/{icons,applications}
     cp -r extracted/usr/share/icons/hicolor $out/share/icons/ 2>/dev/null || true
     cp extracted/usr/share/applications/orca-ide.desktop $out/share/applications/ 2>/dev/null || true

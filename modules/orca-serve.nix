@@ -13,12 +13,13 @@ let
     mkdir -p "$(dirname ${readyLog})"
     : > ${readyLog}
     : > ${readyLog}.err
+    # Default runtime pairing (laptop/desktop clients). Already-paired mobile
+    # devices keep working via device tokens after restart.
     exec ${pkgs.coreutils}/bin/stdbuf -oL -eL \
       ${orca-desktop}/bin/orca-desktop \
         --serve \
         --serve-port ${toString port} \
         --serve-pairing-address ${pairingAddress} \
-        --serve-mobile-pairing \
         --serve-json \
       2> >( ${pkgs.coreutils}/bin/tee -a ${readyLog}.err >&2 ) \
       | ${pkgs.coreutils}/bin/tee -a ${readyLog}
