@@ -35,6 +35,7 @@ in
     # build tooling
     gcc
     gnumake
+    openssl
     pkg-config
 
     # git

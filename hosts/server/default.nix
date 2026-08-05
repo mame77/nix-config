@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -11,4 +11,8 @@
   ];
 
   networking.hostName = "server";
+
+  fonts.packages = with pkgs; [
+    noto-fonts-cjk-sans
+  ];
 }

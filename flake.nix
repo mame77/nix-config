@@ -37,7 +37,22 @@
           home-manager.nixosModules.home-manager
           ({ ... }: {
             nixpkgs.config.allowUnfreePredicate = pkg:
-              builtins.elem (nixpkgs.lib.getName pkg) [ "obsidian" "google-chrome" "bws" ];
+              let name = nixpkgs.lib.getName pkg;
+              in builtins.elem name [ "obsidian" "google-chrome" "bws" ]
+                || nixpkgs.lib.hasPrefix "android" name
+                || nixpkgs.lib.hasPrefix "platform-tools" name
+                || nixpkgs.lib.hasPrefix "build-tools" name
+                || nixpkgs.lib.hasPrefix "system-images" name
+                || nixpkgs.lib.hasPrefix "commandlinetools" name
+                || nixpkgs.lib.hasPrefix "x86_64-" name
+                || name == "x86_64-35_r09.zip"
+                || name == "system-image-35-google_apis-x86_64"
+                || name == "tools"
+                || name == "platforms"
+                || name == "cmake"
+                || name == "cmdline-tools"
+                || name == "emulator";
+            nixpkgs.config.android_sdk.accept_license = true;
             nixpkgs.config.permittedInsecurePackages = [ "electron-39.8.10" ];
             nixpkgs.config.allowDeprecatedx86_64Darwin = true;
             # Propagate `inputs` to home-manager modules (noctalia, etc.).
