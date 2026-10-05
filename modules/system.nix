@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # ─── bootloader ─────────────────────────────────────
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -23,6 +25,10 @@
 
   # ─── docker ─────────────────────────────────────────
   virtualisation.docker.enable = true;
+  networking.firewall.interfaces."docker0".allowedTCPPortRanges = [
+    { from = 5173; to = 6072; }
+    { from = 18080; to = 18080; }
+  ];
 
   # ─── openssh ────────────────────────────────────────
   services.openssh = {
@@ -76,6 +82,7 @@
     '';
   in with pkgs; [
     curl
+    lsof
     tailscale
     sshfs
     chromium-wrapped

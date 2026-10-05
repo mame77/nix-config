@@ -146,4 +146,13 @@ bind -x '"\C-x\C-d": __devctl_cd_from_tmux_popup'
 # alias
 alias ...="../.."
 alias ls="ls --color=auto"
+opencode() {
+  local data_home="$HOME/.local/share"
+  case "$PWD/" in
+    "$HOME/ghq/github.com/digeon-inc/"*)
+      data_home="$HOME/.local/share/opencode-digeon"
+      ;;
+  esac
+  XDG_DATA_HOME="$data_home" command opencode "$@"
+}
 alias oc="opencode"

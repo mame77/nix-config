@@ -51,18 +51,6 @@
     /data 100.64.0.0/10(rw,sync,no_subtree_check,fsid=0,no_root_squash)
   '';
 
-  # ─── Syncthing ─────────────────────────────────────
-  # DO NOT change dataDir without migrating cert/key/config.xml.
-  # Actual files live at dataDir/.config/syncthing/ (identity, DB, config).
-  # Changing dataDir regenerates device ID → breaks pairing with devices.
-  services.syncthing = {
-    enable = true;
-    user = "mame";
-    dataDir = "/home/mame/.config/syncthing";
-    overrideDevices = false;
-    overrideFolders = false;
-  };
-
   # ─── Ollama (OpenWhispr 要約 / 整形用 LLM) ─────────
   services.ollama = {
     enable = true;
