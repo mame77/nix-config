@@ -3,8 +3,17 @@
 , libnotify, libsecret, libxcb, libxkbcommon, libxcomposite, libxdamage
 , libxext, libxfixes, libxrandr, mesa, nspr, nss, pango, libudev-zero
 , libx11, libxshmfence, libappindicator-gtk3, libxscrnsaver, libxtst, libGL
+, python312, gobject-introspection, gdk-pixbuf, harfbuzz, xdotool, xprop, xwininfo, wmctrl, scrot, xclip
 }:
 
+let
+  computerPython = python312.withPackages (ps: with ps; [ pygobject3 pyatspi pillow ]);
+  computerPath = lib.makeBinPath [ computerPython xdotool xprop xwininfo wmctrl scrot xclip ];
+  introspectionLibraries = map lib.getLib [
+    at-spi2-core gtk3 glib gobject-introspection gdk-pixbuf pango harfbuzz
+  ];
+  typelibPath = lib.makeSearchPath "lib/girepository-1.0" introspectionLibraries;
+in
 stdenv.mkDerivation rec {
   pname = "orca-desktop";
   version = "1.4.162";
@@ -36,13 +45,18 @@ stdenv.mkDerivation rec {
     cp -r extracted/opt/Orca/* $out/opt/Orca/
 
     makeWrapper $out/opt/Orca/orca-ide $out/bin/orca-desktop \
-      --add-flags "--no-sandbox" \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libGL libnotify ]} \
+      --add-flags "--no-sandbox --force-renderer-accessibility" \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath ([ libGL libnotify ] ++ introspectionLibraries)} \
+      --prefix GI_TYPELIB_PATH : ${typelibPath} \
+      --prefix PATH : ${computerPath} \
       --unset TMUX \
       --unset TMUX_PANE
 
     # Expose Orca's command-line client separately from the desktop launcher.
-    makeWrapper $out/opt/Orca/resources/bin/orca-ide $out/bin/orca
+    makeWrapper $out/opt/Orca/resources/bin/orca-ide $out/bin/orca \
+      --prefix GI_TYPELIB_PATH : ${typelibPath} \
+      --prefix PATH : ${computerPath}
+    ln -s orca $out/bin/orca-ide
 
     mkdir -p $out/share/{icons,applications}
     cp -r extracted/usr/share/icons/hicolor $out/share/icons/ 2>/dev/null || true

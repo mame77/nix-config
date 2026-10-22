@@ -83,3 +83,20 @@ and emulators appear in `adb devices` on the server. No server desktop is needed
 for this Android-only client.
 
 Avoid simultaneous manual and AI input on the same screen/device.
+
+## AI desktop control through Orca
+
+The Orca package supplies a dedicated Python runtime, AT-SPI/GTK introspection
+paths, and X11 screenshot/input helpers. The `orca-serve` service shares display
+`:99` and the user D-Bus session with the visible Xfce desktop.
+
+The server installs the `orca-computer-use` skill under `~/.agents/skills` so
+Codex can discover the CLI workflow. In a server chat, ask for desktop work with
+`$orca-computer-use`, for example: "Use $orca-computer-use to inspect the app's
+home screen." If an existing chat has not discovered the skill, start a new chat.
+
+The development app's CLI is `orca-ide` (also available as `orca`). Read its
+version-matched guide with `orca-ide skills get computer-use`, then use
+`orca-ide computer capabilities --json` and follow that guide. Screenshots and
+saved files are on the server. Keep private application content scoped to the
+requested task and coordinate manual/AI input on the shared desktop.
