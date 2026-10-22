@@ -3,6 +3,9 @@
 {
   imports = [ ./desktop.nix ];
 
+  # Preserve pre-existing imperative files when bringing them under management.
+  home-manager.backupFileExtension = "before-server-desktop";
+
   home-manager.users.mame = { ... }: {
     # Fcitx is normally started by niri on the laptop. Xfce uses XDG autostart.
     xdg.configFile."autostart/org.fcitx.Fcitx5.desktop".text = ''

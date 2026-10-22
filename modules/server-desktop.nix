@@ -7,6 +7,7 @@ let
     XDG_RUNTIME_DIR = "/run/user/${uid}";
     DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${uid}/bus";
     XDG_CURRENT_DESKTOP = "XFCE";
+    XDG_CONFIG_DIRS = "/etc/xdg";
     XDG_SESSION_TYPE = "x11";
     GDK_BACKEND = "x11";
     QT_QPA_PLATFORM = "xcb";
@@ -36,6 +37,7 @@ in
   };
   hardware.graphics.enable = true;
   security.polkit.enable = true;
+  systemd.tmpfiles.rules = [ "d /tmp/.ICE-unix 1777 root root -" ];
   services.gnome.gnome-keyring.enable = true;
   xdg.portal = {
     enable = true;
@@ -59,7 +61,7 @@ in
       for attempt in $(seq 1 30); do
         if ${pkgs.xdpyinfo}/bin/xdpyinfo >/dev/null 2>&1; then
           ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd \
-            DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_DATA_DIRS \
+            DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_DATA_DIRS XDG_CONFIG_DIRS \
             GDK_BACKEND QT_QPA_PLATFORM GTK_IM_MODULE QT_IM_MODULE XMODIFIERS PATH
           exit 0
         fi

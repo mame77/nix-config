@@ -28,6 +28,9 @@ Keep existing uncommitted changes in a server checkout when updating it. A clean
 deployment checkout can be used separately; there is no need to reset the main
 checkout or its `flake.lock`.
 
+When Home Manager adopts an existing server settings file, it preserves the old
+file next to it with the suffix `.before-server-desktop`.
+
 ## View the server desktop from the laptop
 
 ```sh
