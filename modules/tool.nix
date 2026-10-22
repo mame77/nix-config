@@ -1,16 +1,14 @@
 { pkgs, ... }:
 
 let
-  opencode-desktop = pkgs.callPackage ../packages/opencode-desktop.nix {};
-  orca-desktop = pkgs.callPackage ../packages/orca-desktop.nix {};
+  remoteClients = import ../packages/remote-clients.nix { inherit pkgs; };
 in
-
 {
+  imports = [ ./desktop-apps.nix ];
+
   users.users.mame.packages = with pkgs; [
     # compositor & shell
     niri
-    ghostty
-    foot
     tuigreet
 
     # wayland utilities
@@ -27,22 +25,16 @@ in
     gpu-screen-recorder-gtk
     xdg-utils
 
-    # browser
-    google-chrome
-    bitwarden-desktop
-    bitwarden-cli
-
     # terminal / system TUIs
-    btop
     bluetuith
     wiremix
     impala
 
     # utilities
     brightnessctl
-    libnotify
-    obsidian
-    opencode-desktop
-    orca-desktop
+    # Clients for the development server's desktop and Android display.
+    tigervnc
+    remoteClients.server-desktop
+    remoteClients.server-android
   ];
 }

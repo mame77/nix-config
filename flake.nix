@@ -62,6 +62,9 @@
       };
     in {
       packages.x86_64-linux = {
+        inherit (import ./packages/remote-clients.nix {
+          pkgs = nixpkgs.legacyPackages.x86_64-linux;
+        }) server-desktop server-android;
         karukan-dict = nixpkgs.legacyPackages.x86_64-linux.callPackage ./packages/karukan-dict.nix {};
         karukan-models = nixpkgs.legacyPackages.x86_64-linux.callPackage ./packages/karukan-models.nix {};
         fcitx5-karukan = nixpkgs.legacyPackages.x86_64-linux.callPackage ./packages/fcitx5-karukan.nix {};

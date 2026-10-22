@@ -2,10 +2,11 @@
 
 let
   fcitx5Wrapper = config.i18n.inputMethod.package;
-  fcitx5-karukan = pkgs.callPackage ../packages/fcitx5-karukan.nix { };
 in
 
 {
+  imports = [ ./system-desktop.nix ];
+
   # ─── laptop-specific hardware ──────────────────────
   hardware.bluetooth.enable = true;
   services.upower.enable = true;
@@ -76,35 +77,8 @@ in
     };
   };
 
-  # ─── IME: fcitx5 + karukan (env vars / dbus / autostart 自動) ─
-  i18n.inputMethod = {
-    enable = true;
-    type = "fcitx5";
-    fcitx5.addons = [ fcitx5-karukan ];
-  };
-
   # niri 配下で fcitx5 を autostart するため
   services.xserver.desktopManager.runXdgAutostartIfNone = true;
-
-  # ─── fonts ─────────────────────────────────────────
-  fonts.packages = with pkgs; [ udev-gothic-nf ];
-
-  # ─── audio: PipeWire + WirePlumber ─────────────────
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    wireplumber.enable = true;
-    pulse.enable = true;
-  };
-  security.rtkit.enable = true;
-
-  systemd.user.services.pipewire = {
-    serviceConfig.Restart = "no";
-  };
-  systemd.user.services.wireplumber = {
-    serviceConfig.Restart = "no";
-  };
 
   # ─── NFS client (mount server /data on demand) ─────
   environment.systemPackages = with pkgs; [ nfs-utils ];

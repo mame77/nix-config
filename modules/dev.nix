@@ -4,6 +4,8 @@ let
   pythonWithPkgs = (pkgs.python312.withPackages (ps: with ps; [
     python-pptx
     openpyxl
+    pygobject3
+    pyatspi
   ])).overrideAttrs (old: {
     passthru = pkgs.lib.filterAttrs (name: _: name != "doc") old.passthru;
   });

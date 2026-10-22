@@ -38,7 +38,9 @@ in
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "simple";
-      ExecStart = "${pkgs.xorg-server}/bin/Xvfb ${display} -screen 0 1280x1024x24 -nolisten tcp";
+      User = "mame";
+      Group = "users";
+      ExecStart = "${pkgs.xorg-server}/bin/Xvfb ${display} -screen 0 1920x1080x24 -nolisten tcp";
       Restart = "always";
       RestartSec = 5;
     };
