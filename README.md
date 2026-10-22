@@ -46,6 +46,10 @@ viewer closes its tunnel, but leaves server applications running. Local port
 SSH provides authentication and encryption. Chrome/Bitwarden sign-ins and Android
 USB-debugging authorization must be completed on the server's own profiles.
 
+In the remote desktop, use **Shift+Space** to switch between English and Japanese
+(Karukan). Ctrl+Space is also available, but may be consumed by the laptop's IME.
+The remote IME state is shared across windows, including browser sign-in windows.
+
 The server services are `orca-xvfb`, `server-desktop`, `server-desktop-vnc`, and
 `orca-serve`. Logs are available with `journalctl -u SERVICE`. The SSH account
 `mame` shares display `:99` and the user bus at `/run/user/1000/bus`.

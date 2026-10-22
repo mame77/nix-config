@@ -64,7 +64,7 @@
         # Layout
         Default Layout=us
         # Default Input Method
-        DefaultIM=keyboard-us
+        DefaultIM=karukan
 
         [Groups/0/Items/0]
         # Name

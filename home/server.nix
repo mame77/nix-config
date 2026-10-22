@@ -7,6 +7,17 @@
   home-manager.backupFileExtension = "before-server-desktop";
 
   home-manager.users.mame = { ... }: {
+    # Keep the remote IME toggle independent of the laptop's Ctrl+Space, and
+    # preserve its state when moving between Codex and a browser/login window.
+    xdg.configFile."fcitx5/config".text = ''
+      [Hotkey/TriggerKeys]
+      0=Control+space
+      1=Shift+space
+
+      [Behavior]
+      ShareInputState=All
+    '';
+
     # Fcitx is normally started by niri on the laptop. Xfce uses XDG autostart.
     xdg.configFile."autostart/org.fcitx.Fcitx5.desktop".text = ''
       [Desktop Entry]
