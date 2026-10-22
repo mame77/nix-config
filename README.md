@@ -52,8 +52,8 @@ between the laptop and server. Only the explicit clipboard is synchronized;
 selecting text alone does not replace it. Recopy text after reconnecting if an
 older connection already converted Japanese characters to question marks.
 
-In the remote desktop, use **Shift+Space** to switch between English and Japanese
-(Karukan). Ctrl+Space is also available, but may be consumed by the laptop's IME.
+In the remote desktop, tap **Left Alt** to select Japanese (Karukan) and
+**Right Alt** to select English. The former Shift+Space toggle is disabled.
 The remote IME state is shared across windows, including browser sign-in windows.
 The desktop and Orca services export `GTK_PATH` and `GTK_IM_MODULE_FILE` so
 terminals and Orca's Electron input fields can load Fcitx's GTK input module

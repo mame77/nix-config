@@ -12,12 +12,18 @@
     home.file.".agents/skills/android-emulator-use/SKILL.md".source =
       ../dotfiles/agents/skills/android-emulator-use/SKILL.md;
 
-    # Keep the remote IME toggle independent of the laptop's Ctrl+Space, and
-    # preserve its state when moving between Codex and a browser/login window.
+    # Select Japanese/English explicitly with the left/right Alt keys, and
+    # preserve the mode when moving between application windows.
     xdg.configFile."fcitx5/config".text = ''
       [Hotkey/TriggerKeys]
-      0=Control+space
-      1=Shift+space
+
+      [Hotkey/AltTriggerKeys]
+
+      [Hotkey/ActivateKeys]
+      0=Alt_L
+
+      [Hotkey/DeactivateKeys]
+      0=Alt_R
 
       [Behavior]
       ShareInputState=All
