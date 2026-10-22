@@ -90,7 +90,8 @@ in
     serviceConfig = {
       User = "mame";
       Group = "users";
-      ExecStart = "${pkgs.x11vnc}/bin/x11vnc -display :99 -localhost -rfbport 5900 -forever -shared -nopw -xkb -noxdamage";
+      # TigerVNC's Extended Clipboard preserves UTF-8 text, including Japanese.
+      ExecStart = "${pkgs.tigervnc}/bin/x0vncserver -display :99 -localhost -interface 127.0.0.1 -rfbport 5900 -SecurityTypes None -AlwaysShared -AcceptCutText -SendCutText -SetPrimary=0 -SendPrimary=0 -AcceptSetDesktopSize=0";
       Restart = "always";
       RestartSec = 5;
     };

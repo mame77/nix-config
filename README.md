@@ -46,6 +46,12 @@ viewer closes its tunnel, but leaves server applications running. Local port
 SSH provides authentication and encryption. Chrome/Bitwarden sign-ins and Android
 USB-debugging authorization must be completed on the server's own profiles.
 
+TigerVNC `x0vncserver` shares the existing display and transfers clipboard text
+with its UTF-8 Extended Clipboard support, preserving Japanese when copying
+between the laptop and server. Only the explicit clipboard is synchronized;
+selecting text alone does not replace it. Recopy text after reconnecting if an
+older connection already converted Japanese characters to question marks.
+
 In the remote desktop, use **Shift+Space** to switch between English and Japanese
 (Karukan). Ctrl+Space is also available, but may be consumed by the laptop's IME.
 The remote IME state is shared across windows, including browser sign-in windows.
