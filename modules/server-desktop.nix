@@ -2,6 +2,7 @@
 
 let
   uid = "1000";
+  gtkInputPath = "${config.i18n.inputMethod.package}/lib/gtk-3.0:${config.i18n.inputMethod.package}/lib/gtk-4.0:/run/current-system/sw/lib/gtk-3.0:/run/current-system/sw/lib/gtk-4.0";
   desktopEnvironment = {
     DISPLAY = ":99";
     XDG_RUNTIME_DIR = "/run/user/${uid}";
@@ -49,6 +50,9 @@ in
   # separate remote-login desktops that cannot see each other's applications.
   systemd.services.server-desktop = {
     description = "Persistent development desktop";
+    # Keep open applications alive during rebuilds. Environment changes take
+    # effect in a new desktop session; reopen affected apps with the new env.
+    restartIfChanged = false;
     wantedBy = [ "multi-user.target" ];
     requires = [ "orca-xvfb.service" "user@${uid}.service" ];
     wants = [ "home-manager-mame.service" ];
@@ -56,13 +60,17 @@ in
     environment = desktopEnvironment // {
       PATH = pkgs.lib.mkForce (pkgs.lib.concatStringsSep ":" desktopPath);
       XDG_DATA_DIRS = "${config.i18n.inputMethod.package}/share:/run/current-system/sw/share:/etc/profiles/per-user/mame/share";
+      # System services bypass /etc/profile. GTK apps need these paths to find
+      # Fcitx's input module, even when GTK_IM_MODULE is already set correctly.
+      GTK_PATH = gtkInputPath;
+      GTK_IM_MODULE_FILE = "/run/current-system/sw/etc/gtk-3.0/immodules.cache";
     };
     preStart = ''
       for attempt in $(seq 1 30); do
         if ${pkgs.xdpyinfo}/bin/xdpyinfo >/dev/null 2>&1; then
           ${pkgs.dbus}/bin/dbus-update-activation-environment --systemd \
             DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_DATA_DIRS XDG_CONFIG_DIRS \
-            GDK_BACKEND QT_QPA_PLATFORM GTK_IM_MODULE QT_IM_MODULE XMODIFIERS PATH
+            GDK_BACKEND QT_QPA_PLATFORM GTK_IM_MODULE GTK_PATH GTK_IM_MODULE_FILE QT_IM_MODULE XMODIFIERS PATH
           exit 0
         fi
         sleep 1
@@ -102,7 +110,10 @@ in
   systemd.services.orca-serve = {
     requires = [ "user@${uid}.service" ];
     after = [ "user@${uid}.service" "server-desktop.service" ];
-    environment = desktopEnvironment;
+    environment = desktopEnvironment // {
+      GTK_PATH = gtkInputPath;
+      GTK_IM_MODULE_FILE = "/run/current-system/sw/etc/gtk-3.0/immodules.cache";
+    };
     serviceConfig.Environment = [ "XDG_DATA_DIRS=/run/current-system/sw/share:/etc/profiles/per-user/mame/share" ];
   };
 }

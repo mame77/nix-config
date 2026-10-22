@@ -55,6 +55,11 @@ older connection already converted Japanese characters to question marks.
 In the remote desktop, use **Shift+Space** to switch between English and Japanese
 (Karukan). Ctrl+Space is also available, but may be consumed by the laptop's IME.
 The remote IME state is shared across windows, including browser sign-in windows.
+The desktop and Orca services export `GTK_PATH` and `GTK_IM_MODULE_FILE` so
+terminals and Orca's Electron input fields can load Fcitx's GTK input module
+from the system's generated module cache. Configuration switches preserve
+the running desktop; environment changes apply to a new desktop session, and
+existing applications must be reopened with the updated environment.
 
 The server services are `orca-xvfb`, `server-desktop`, `server-desktop-vnc`, and
 `orca-serve`. Logs are available with `journalctl -u SERVICE`. The SSH account
