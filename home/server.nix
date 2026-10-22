@@ -9,6 +9,8 @@
   home-manager.users.mame = { ... }: {
     home.file.".agents/skills/orca-computer-use/SKILL.md".source =
       ../dotfiles/agents/skills/orca-computer-use/SKILL.md;
+    home.file.".agents/skills/android-emulator-use/SKILL.md".source =
+      ../dotfiles/agents/skills/android-emulator-use/SKILL.md;
 
     # Keep the remote IME toggle independent of the laptop's Ctrl+Space, and
     # preserve its state when moving between Codex and a browser/login window.

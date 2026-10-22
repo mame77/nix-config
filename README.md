@@ -95,6 +95,13 @@ for this Android-only client.
 
 Avoid simultaneous manual and AI input on the same screen/device.
 
+For AI interaction inside Android, the server installs `$android-emulator-use`.
+It reads screenshots/UI Automator hierarchies and sends taps, swipes and key
+events through ADB with an explicit device serial. Android controls are not
+desktop AT-SPI elements inside the scrcpy mirror. Example: "Use
+$android-emulator-use to inspect FitSwipe, open the preset screen and return
+home without changing its records."
+
 ## AI desktop control through Orca
 
 On the server, Chrome starts with `--force-renderer-accessibility` so Orca can

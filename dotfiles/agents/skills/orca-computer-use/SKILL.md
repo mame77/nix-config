@@ -42,6 +42,13 @@ unsupported, focus the observed address field, select all with the documented
 hotkey, and use `paste-text` once. Confirm the exact value before Return. Stop
 and report unexpected concatenation instead of appending the URL repeatedly.
 
+## Android emulator
+
+For controls inside the Android emulator, use the installed
+`~/.agents/skills/android-emulator-use/SKILL.md` workflow. The scrcpy mirror
+does not expose Android controls through the desktop AT-SPI tree; ADB supplies
+the guest screenshot, hierarchy, touch input, and key events.
+
 Use the user's requested apps and actions. Installing this skill does not
 authorize sending messages, submitting forms, purchases, or account changes.
 Respect existing authorization and tool permissions. If access is blocked,
