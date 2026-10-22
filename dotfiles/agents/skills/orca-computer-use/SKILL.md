@@ -23,6 +23,25 @@ and error handling. Prefer JSON responses. Select windows from fresh observed
 state. Screenshot paths returned by the CLI belong to this server; view those
 images before choosing coordinates.
 
+## Chrome navigation
+
+The server's Chrome launcher enables `--force-renderer-accessibility`. If a
+snapshot contains only a window/frame, the existing Chrome process may predate
+that configuration. Report this and reopen Chrome through its configured
+launcher while preserving the user's session; do not keep typing into a field
+you cannot identify. A running Chrome process ignores new launch flags.
+
+For navigation, first get fresh Chrome state with `--restore-window`. Find the
+address/search entry in `treeText`, focus it, and use `computer set-value` to
+replace its entire contents. Inspect the returned state: confirm the complete
+requested URL and the focused input before pressing Return. Then get fresh
+state and verify the resulting URL, title, and page content.
+
+Do not assume `type-text` replaces existing contents. If direct value writes are
+unsupported, focus the observed address field, select all with the documented
+hotkey, and use `paste-text` once. Confirm the exact value before Return. Stop
+and report unexpected concatenation instead of appending the URL repeatedly.
+
 Use the user's requested apps and actions. Installing this skill does not
 authorize sending messages, submitting forms, purchases, or account changes.
 Respect existing authorization and tool permissions. If access is blocked,

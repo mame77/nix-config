@@ -44,6 +44,9 @@ stdenv.mkDerivation rec {
     mkdir -p $out/opt/Orca $out/bin $out/share
     cp -r extracted/opt/Orca/* $out/opt/Orca/
 
+    # Keep Linux key synthesis consistent with the documented CLI key names.
+    patch -d $out/opt/Orca -p1 < ${./orca-linux-keyboard.patch}
+
     makeWrapper $out/opt/Orca/orca-ide $out/bin/orca-desktop \
       --add-flags "--no-sandbox --force-renderer-accessibility" \
       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath ([ libGL libnotify ] ++ introspectionLibraries)} \

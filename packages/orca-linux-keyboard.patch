@@ -1,0 +1,35 @@
+--- a/resources/computer-use-linux/runtime.py
++++ b/resources/computer-use-linux/runtime.py
+@@ -878,20 +878,25 @@
+ 
+ 
+ def press_key(raw):
+     name = key_name(raw)
+-    if len(name) == 1:
+-        Atspi.generate_keyboard_event(0, name, Atspi.KeySynthType.STRING)
+-        return
+-    if Gdk is None:
+-        raise RuntimeError("GDK is required for non-character key synthesis")
+-    Atspi.generate_keyboard_event(Gdk.keyval_from_name(name), None, Atspi.KeySynthType.PRESSRELEASE)
++    xdotool = shutil.which("xdotool")
++    if xdotool is None:
++        raise RuntimeError("press-key requires xdotool")
++    # AT-SPI PRESSRELEASE expects a hardware keycode, not a GDK keysym.
++    subprocess.run([xdotool, "key", "--clearmodifiers", name], check=True)
+ 
+ 
+ def hotkey(raw):
+     key_spec = re.sub(r"(?i)commandorcontrol|cmdorctrl", "ctrl", str(raw))
++    parts = key_spec.split("+")
++    # An uppercase letter makes xdotool synthesize an implicit Shift modifier.
++    # Keep Shift explicit: CmdOrCtrl+A means ctrl+a, Ctrl+Shift+A means ctrl+shift+a.
++    if len(parts[-1]) == 1:
++        parts[-1] = parts[-1].lower()
++    key_spec = "+".join(parts)
+     xdotool = shutil.which("xdotool")
+     if xdotool:
+-        subprocess.run([xdotool, "key", key_spec], check=True)
++        subprocess.run([xdotool, "key", "--clearmodifiers", key_spec], check=True)
+         return
+     if "+" in key_spec:
+         raise RuntimeError("hotkey combinations require xdotool")

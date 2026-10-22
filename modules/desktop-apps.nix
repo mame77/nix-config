@@ -1,14 +1,19 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 let
   opencode-desktop = pkgs.callPackage ../packages/opencode-desktop.nix {};
   orca-desktop = pkgs.callPackage ../packages/orca-desktop.nix {};
+  chrome = if config.networking.hostName == "server" then
+    pkgs.google-chrome.override {
+      commandLineArgs = "--force-renderer-accessibility";
+    }
+  else pkgs.google-chrome;
 in
 {
   users.users.mame.packages = with pkgs; [
     ghostty
     foot
-    google-chrome
+    chrome
     bitwarden-desktop
     bitwarden-cli
     btop

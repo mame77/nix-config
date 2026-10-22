@@ -97,6 +97,16 @@ Avoid simultaneous manual and AI input on the same screen/device.
 
 ## AI desktop control through Orca
 
+On the server, Chrome starts with `--force-renderer-accessibility` so Orca can
+read its address bar and page controls. An already-running browser must be
+reopened for this launch flag to take effect. The desktop-control skill uses
+complete address-field replacement and checks the URL before navigation.
+
+The pinned Orca Linux provider includes a keyboard patch: named keys use
+`xdotool` keysyms instead of passing GDK keysyms as AT-SPI hardware keycodes;
+hotkey letters are normalized so `CmdOrCtrl+A` does not add an implicit Shift.
+Synthetic named keys and shortcuts clear held modifiers during delivery.
+
 The Orca package supplies a dedicated Python runtime, AT-SPI/GTK introspection
 paths, and X11 screenshot/input helpers. The `orca-serve` service shares display
 `:99` and the user D-Bus session with the visible Xfce desktop.
