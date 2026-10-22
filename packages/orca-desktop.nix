@@ -16,14 +16,24 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "orca-desktop";
-  version = "1.4.162";
+  version = "1.4.237";
 
   src = fetchurl {
     url = "https://github.com/stablyai/orca/releases/download/v${version}/orca-ide_${version}_amd64.deb";
-    hash = "sha256-yR7YiSHKsiLDhUu/I7hhLBFeFRCsuPeFgExCca2o8T0=";
+    hash = "sha256-KW/9FDRWEr5wygnpq0D3/7t/hC+1eU4ebB68MkNgy1w=";
   };
 
   nativeBuildInputs = [ dpkg autoPatchelfHook makeWrapper ];
+
+  # Remote payloads include other architectures and musl hosts. Only patch
+  # the local app; the templates must retain their upstream dependencies.
+  dontAutoPatchelf = true;
+  dontStrip = true;
+  postFixup = ''
+    mv $out/opt/Orca/resources/orcad-template "$TMPDIR/orcad-template"
+    autoPatchelf $out
+    mv "$TMPDIR/orcad-template" $out/opt/Orca/resources/orcad-template
+  '';
 
   buildInputs = [
     alsa-lib at-spi2-core cairo cups dbus expat glib gtk3 libdrm
