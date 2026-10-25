@@ -2,9 +2,6 @@
 
 set -euo pipefail
 
-CODEX_HOME_DIR="/home/mame/.local/opt/Codex"
-CODEX_LAUNCHER="$CODEX_HOME_DIR/opt/codex-desktop/start.sh"
-
 focus_codex_window() {
     local window_id
 
@@ -31,6 +28,7 @@ if focus_codex_window; then
     exit 0
 fi
 
-unset APPDIR
-export APPDIR="$CODEX_HOME_DIR"
-exec "$CODEX_LAUNCHER" --wayland
+unset APPDIR GTK_IM_MODULE
+export NIXOS_OZONE_WL=1
+export CODEX_OZONE_PLATFORM=wayland
+exec codex-desktop --new-window "$@"

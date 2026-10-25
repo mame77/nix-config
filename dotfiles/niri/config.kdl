@@ -57,7 +57,7 @@ window-rule {
     draw-border-with-background false
     geometry-corner-radius 12
     clip-to-geometry true
-    opacity 0.95
+    opacity 1.0
 }
 // chromium / google-chrome は背景透過しない
 window-rule {
@@ -71,7 +71,7 @@ window-rule {
 window-rule {
     match app-id="TUI.float"
     open-floating true
-    opacity 0.95
+    opacity 1.0
 }
 animations {
      workspace-switch {
@@ -108,6 +108,7 @@ binds {
     Mod+B     { spawn "obsidian"; }
     Mod+F     { spawn "fuzzel"; }
     Mod+V     { spawn-sh "/home/mame/.local/opt/OpenCode/ai.opencode.desktop --no-sandbox"; }
+    Mod+Shift+V { spawn "bash" "/home/mame/.config/niri/scripts/codex-desktop.sh"; }
     Mod+W     { spawn "google-chrome-stable"; }
     Mod+E     { spawn "orca-desktop"; }
     Mod+R     { spawn "wlogout"; }

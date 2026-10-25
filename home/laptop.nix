@@ -20,7 +20,18 @@
 
     # ─── desktop: niri / ghostty / btop の XDG 設定 ─
     xdg.configFile."niri/config.kdl".source = ../dotfiles/niri/config.kdl;
+    xdg.configFile."niri/config.kdl".force = true;
+    xdg.configFile."ghostty/config" = {
+      source = ../dotfiles/ghostty/config;
+      force = true;
+    };
     xdg.configFile."niri/scripts".source    = ../dotfiles/niri/scripts;
+    # The Nix package defaults to X11; use native Wayland IME for Fcitx.
+    xdg.configFile."codex-desktop/electron-flags.conf".text = ''
+      --ozone-platform=wayland
+      --enable-wayland-ime=true
+      --wayland-text-input-version=3
+    '';
     # xdg.configFile.btop.source    = ../dotfiles/btop;
 
     # ─── noctalia ──────────────────────────────────
