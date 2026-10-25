@@ -15,6 +15,19 @@
 
   networking.hostName = "server";
 
+  # Allow passwordless administration for mame on this host only.
+  security.sudo.extraRules = [
+    {
+      users = [ "mame" ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
   fonts.packages = with pkgs; [
     noto-fonts-cjk-sans
   ];
