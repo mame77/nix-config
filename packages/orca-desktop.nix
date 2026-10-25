@@ -3,7 +3,7 @@
 , libnotify, libsecret, libxcb, libxkbcommon, libxcomposite, libxdamage
 , libxext, libxfixes, libxrandr, mesa, nspr, nss, pango, libudev-zero
 , libx11, libxshmfence, libappindicator-gtk3, libxscrnsaver, libxtst, libGL
-, python312, gobject-introspection, gdk-pixbuf, harfbuzz, xdotool, xprop, xwininfo, wmctrl, scrot, xclip
+, python312, gobject-introspection, gdk-pixbuf, harfbuzz, xdotool, xprop, xwininfo, wmctrl, scrot, xclip, wayland
 }:
 
 let
@@ -57,9 +57,11 @@ stdenv.mkDerivation rec {
     # Keep Linux key synthesis consistent with the documented CLI key names.
     patch -d $out/opt/Orca -p1 < ${./orca-linux-keyboard.patch}
 
+    # The clipboard helper dlopens libwayland-client.so.0, so autoPatchelf
+    # cannot discover this dependency. It inherits the launcher's library path.
     makeWrapper $out/opt/Orca/orca-ide $out/bin/orca-desktop \
       --add-flags "--no-sandbox --force-renderer-accessibility" \
-      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath ([ libGL libnotify ] ++ introspectionLibraries)} \
+      --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath ([ libGL libnotify wayland ] ++ introspectionLibraries)} \
       --prefix GI_TYPELIB_PATH : ${typelibPath} \
       --prefix PATH : ${computerPath} \
       --unset TMUX \

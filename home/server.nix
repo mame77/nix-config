@@ -11,6 +11,8 @@
       ../dotfiles/agents/skills/orca-computer-use/SKILL.md;
     home.file.".agents/skills/android-emulator-use/SKILL.md".source =
       ../dotfiles/agents/skills/android-emulator-use/SKILL.md;
+    home.file.".agents/skills/orca-opencode2-task/SKILL.md".source =
+      ../dotfiles/agents/skills/orca-opencode2-task/SKILL.md;
 
     # Select Japanese/English explicitly with the left/right Alt keys, and
     # preserve the mode when moving between application windows.

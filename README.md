@@ -123,6 +123,12 @@ Codex can discover the CLI workflow. In a server chat, ask for desktop work with
 `$orca-computer-use`, for example: "Use $orca-computer-use to inspect the app's
 home screen." If an existing chat has not discovered the skill, start a new chat.
 
+The server also installs `orca-opencode2-task` for task handoffs to a separate
+Orca worktree using OpenCode 2's GUI chat (not a terminal). For example:
+"Use $orca-opencode2-task to investigate why bw-sudo is unavailable in a separate
+worktree." It creates the checkout, launches `opencode2` with `--surface chat`,
+delivers a self-contained prompt, and verifies delivery before reporting success.
+
 The development app's CLI is `orca-ide` (also available as `orca`). Read its
 version-matched guide with `orca-ide skills get computer-use`, then use
 `orca-ide computer capabilities --json` and follow that guide. Screenshots and
