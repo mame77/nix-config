@@ -76,6 +76,8 @@ in
     llmAgents.opencode
     llmAgents.grok
     llmAgents.codex
+    # OpenCode V2 CLI (used by Orca's opencode2 integration)
+    llmAgents.opencode2
 
     # agent multiplexer
     herdr

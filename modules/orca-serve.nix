@@ -2,34 +2,13 @@
 
 let
   orca-desktop = pkgs.callPackage ../packages/orca-desktop.nix {};
-  pairingAddress = "100.77.153.77";
-  port = 6768;
   display = ":99";
-  readyLog = "/home/mame/.config/orca/serve-ready.jsonl";
-
-  # Electron main expects rewritten flags (--serve-*), not the CLI subcommand form.
-  orcaServeScript = pkgs.writeShellScript "orca-serve" ''
-    set -euo pipefail
-    mkdir -p "$(dirname ${readyLog})"
-    : > ${readyLog}
-    : > ${readyLog}.err
-    # Default runtime pairing (laptop/desktop clients). Already-paired mobile
-    # devices keep working via device tokens after restart.
-    exec ${pkgs.coreutils}/bin/stdbuf -oL -eL \
-      ${orca-desktop}/bin/orca-desktop \
-        --serve \
-        --serve-port ${toString port} \
-        --serve-pairing-address ${pairingAddress} \
-        --serve-json \
-      2> >( ${pkgs.coreutils}/bin/tee -a ${readyLog}.err >&2 ) \
-      | ${pkgs.coreutils}/bin/tee -a ${readyLog}
-  '';
 in
 {
   users.users.mame.packages = [ orca-desktop ];
 
   environment.systemPackages = [
-    pkgs.xorg-server # Xvfb for headless orca serve
+    pkgs.xorg-server # Xvfb for the persistent Orca IDE
   ];
 
   # Orca's auto-Xvfb may not find the Nix-provided binary; manage display ourselves.
@@ -46,9 +25,11 @@ in
     };
   };
 
-  systemd.services.orca-serve = {
-    description = "Orca runtime server";
-    after = [ "network-online.target" "tailscaled.service" "orca-xvfb.service" ];
+  # Run the full IDE so its account and Orca Relay settings are available.
+  # The IDE owns the runtime; do not run a second `orca serve` for this profile.
+  systemd.services.orca-desktop = {
+    description = "Orca IDE";
+    after = [ "network-online.target" "orca-xvfb.service" "server-desktop.service" ];
     wants = [ "network-online.target" "orca-xvfb.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
@@ -59,10 +40,12 @@ in
       Environment = [
         "HOME=/home/mame"
         "DISPLAY=${display}"
+        "XDG_RUNTIME_DIR=/run/user/1000"
+        "DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus"
         "LIBGL_ALWAYS_SOFTWARE=1"
         "PATH=/etc/profiles/per-user/mame/bin:/run/current-system/sw/bin"
       ];
-      ExecStart = "${orcaServeScript}";
+      ExecStart = "${orca-desktop}/bin/orca-desktop";
       Restart = "always";
       RestartSec = 5;
       StandardOutput = "journal";
@@ -72,6 +55,4 @@ in
       TimeoutStopSec = 20;
     };
   };
-
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ port ];
 }

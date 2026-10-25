@@ -16,11 +16,11 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "orca-desktop";
-  version = "1.4.237";
+  version = "1.4.240";
 
   src = fetchurl {
     url = "https://github.com/stablyai/orca/releases/download/v${version}/orca-ide_${version}_amd64.deb";
-    hash = "sha256-KW/9FDRWEr5wygnpq0D3/7t/hC+1eU4ebB68MkNgy1w=";
+    hash = "sha256-T44pOhmQ1tc8HpuPq1EA1qM4MkfOCfsVLxTOWBdSZiM=";
   };
 
   nativeBuildInputs = [ dpkg autoPatchelfHook makeWrapper ];

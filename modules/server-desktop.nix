@@ -8,7 +8,7 @@ let
     XDG_RUNTIME_DIR = "/run/user/${uid}";
     DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${uid}/bus";
     XDG_CURRENT_DESKTOP = "XFCE";
-    XDG_CONFIG_DIRS = "/etc/xdg";
+    XDG_CONFIG_DIRS = "${pkgs.xfce4-session}/etc/xdg:/etc/xdg";
     XDG_SESSION_TYPE = "x11";
     GDK_BACKEND = "x11";
     QT_QPA_PLATFORM = "xcb";
@@ -107,7 +107,7 @@ in
 
   # Only local SSH forwarding can reach VNC; no public or Tailscale VNC port.
   # Accessibility clients use the same bus and display as the visible desktop.
-  systemd.services.orca-serve = {
+  systemd.services.orca-desktop = {
     requires = [ "user@${uid}.service" ];
     after = [ "user@${uid}.service" "server-desktop.service" ];
     environment = desktopEnvironment // {

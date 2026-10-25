@@ -155,4 +155,4 @@ opencode() {
   esac
   XDG_DATA_HOME="$data_home" command opencode "$@"
 }
-alias oc="opencode"
+alias oc="opencode2"
