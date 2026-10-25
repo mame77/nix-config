@@ -86,8 +86,5 @@ in
     supabase-cli
     wrangler
     xdg-utils
-  ] ++ pkgs.lib.optionals (config.networking.hostName == "server") [
-    # Orca selects V2 through its dedicated opencode2 integration.
-    llmAgents.opencode2
   ];
 }
