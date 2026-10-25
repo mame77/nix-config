@@ -8,7 +8,7 @@ let
     XDG_RUNTIME_DIR = "/run/user/${uid}";
     DBUS_SESSION_BUS_ADDRESS = "unix:path=/run/user/${uid}/bus";
     XDG_CURRENT_DESKTOP = "XFCE";
-    XDG_CONFIG_DIRS = "/etc/xdg";
+    XDG_CONFIG_DIRS = "${pkgs.xfce4-session}/etc/xdg:/etc/xdg";
     XDG_SESSION_TYPE = "x11";
     GDK_BACKEND = "x11";
     QT_QPA_PLATFORM = "xcb";

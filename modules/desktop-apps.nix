@@ -14,12 +14,13 @@ in
     ghostty
     foot
     chrome
-    bitwarden-desktop
     bitwarden-cli
     btop
     libnotify
     obsidian
     opencode-desktop
     orca-desktop
+  ] ++ pkgs.lib.optionals (config.networking.hostName != "server") [
+    pkgs.bitwarden-desktop
   ];
 }
