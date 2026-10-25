@@ -112,6 +112,7 @@ binds {
     Mod+W     { spawn "google-chrome-stable"; }
     Mod+E     { spawn "orca-desktop"; }
     Mod+R     { spawn "wlogout"; }
+    Mod+Shift+R { spawn-sh "nix run /home/mame/ghq/github.com/mame77/nix-config#server-desktop"; }
     Mod+T     { spawn-sh "ghostty --class='app' --command='tmux'"; }
     Mod+Shift+T     { spawn-sh "ghostty --class='app' --command='env TERM=xterm-256color ssh -tt server'"; }
     Mod+Shift+W     { spawn "chromium"; }
